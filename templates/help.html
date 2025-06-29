@@ -371,15 +371,32 @@
                 }
             });
         }
+
+        function statusChangeCallback(response) {
+          if (response.status === 'connected') {
+            console.log('Utente connesso:', response.authResponse);
+            window.location.href = '/dashboard';
+          } else if (response.status === 'not_authorized') {
+            console.log('Utente non autorizzato.');
+            document.getElementById('login-button').style.display = 'block';
+          } else {
+            console.log('Utente non connesso a Facebook.');
+            document.getElementById('login-button').style.display = 'block';
+          }
+        }
+
+        FB.getLoginStatus(function(response) {
+          statusChangeCallback(response);
+        });
     </script>
 
     <script>
       window.fbAsyncInit = function() {
         FB.init({
-          appId      : '{your-app-id}',
+          appId      : '717748311231080', // ID dell'app fornito
           cookie     : true,
           xfbml      : true,
-          version    : '{api-version}'
+          version    : 'v12.0' // Versione API
         });
         FB.AppEvents.logPageView();
       };
