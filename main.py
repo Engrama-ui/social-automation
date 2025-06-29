@@ -1,5 +1,8 @@
-from fastapi import FastAPI
+from fastapi import FastAPI, Request
 from fastapi.middleware.cors import CORSMiddleware
+from fastapi.templating import Jinja2Templates
+from fastapi.staticfiles import StaticFiles
+from fastapi.responses import HTMLResponse
 from database import Base, engine
 import api.content
 import api.templates
@@ -15,6 +18,8 @@ app = FastAPI(
     description="A comprehensive system for automating social media tasks",
     version="1.0.0"
 )
+
+templates = Jinja2Templates(directory="templates")
 
 # Configura CORS
 app.add_middleware(
@@ -35,9 +40,9 @@ app.include_router(api.analytics.router)
 app.include_router(api.platforms.router)
 app.include_router(api.dashboard.router)
 
-@app.get("/")
-async def root():
-    return {"message": "Social Media Automation System is running!"}
+@app.get("/", response_class=HTMLResponse)
+async def root(request: Request):
+    return templates.TemplateResponse("index.html", {"request": request})
 
 @app.get("/health")
 async def health_check():
