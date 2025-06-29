@@ -60,3 +60,17 @@ CREATE TABLE analytics (
     engagement_rate FLOAT,
     UNIQUE(account_id, metric_date)
 );
+
+CREATE TABLE user_preferences (
+    id SERIAL PRIMARY KEY,
+    user_id INT REFERENCES users(id) ON DELETE CASCADE,
+    timezone VARCHAR(50) DEFAULT 'Europe/Rome',
+    language VARCHAR(10) DEFAULT 'it',
+    email_notifications BOOLEAN DEFAULT true,
+    engagement_alerts BOOLEAN DEFAULT true,
+    weekly_reports BOOLEAN DEFAULT false,
+    optimization_tips BOOLEAN DEFAULT false,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    UNIQUE(user_id)
+);

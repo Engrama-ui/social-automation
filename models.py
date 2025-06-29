@@ -108,8 +108,25 @@ class MediaFile(Base):
     created_at = Column(DateTime)
     # user = relationship("User")  # opzionale, se vuoi la relazione
 
-# Aggiungi le relazioni mancanti
+class UserPreferences(Base):
+    __tablename__ = "user_preferences"
+    
+    id = Column(Integer, primary_key=True, index=True)
+    user_id = Column(Integer, ForeignKey("users.id"), unique=True)
+    timezone = Column(String, default="Europe/Rome")
+    language = Column(String, default="it")
+    email_notifications = Column(Boolean, default=True)
+    engagement_alerts = Column(Boolean, default=True)
+    weekly_reports = Column(Boolean, default=False)
+    optimization_tips = Column(Boolean, default=False)
+    created_at = Column(DateTime)
+    updated_at = Column(DateTime)
+    
+    user = relationship("User", back_populates="preferences")
+
+# Add relationships
 User.accounts = relationship("SocialAccount", back_populates="user")
+User.preferences = relationship("UserPreferences", back_populates="user", uselist=False)
 SocialAccount.posts = relationship("ScheduledPost", back_populates="account")
 
 # Espone ContentTemplate per l'import nei servizi

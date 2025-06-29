@@ -12,6 +12,7 @@ import api.hashtags
 import api.analytics
 import api.platforms
 import api.dashboard, api.ui
+import api.account
 
 # Descrizione dettagliata per la documentazione API
 description = """
@@ -198,6 +199,7 @@ app.include_router(api.hashtags.router)
 app.include_router(api.analytics.router)
 app.include_router(api.platforms.router)
 app.include_router(api.dashboard.router)
+app.include_router(api.account.router)
 
 @app.get("/", response_class=HTMLResponse)
 async def root(request: Request):
