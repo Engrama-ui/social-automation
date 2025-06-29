@@ -44,6 +44,10 @@ app.include_router(api.dashboard.router)
 async def root(request: Request):
     return templates.TemplateResponse("index.html", {"request": request})
 
+@app.get("/dashboard", response_class=HTMLResponse)
+async def dashboard(request: Request):
+    return templates.TemplateResponse("dashboard.html", {"request": request})
+
 @app.get("/health")
 async def health_check():
     return {"status": "healthy"}
