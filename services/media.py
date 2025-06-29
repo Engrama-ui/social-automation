@@ -1,7 +1,7 @@
 import os
 from typing import List, Optional
 from datetime import datetime
-from database import db
+from database import SessionLocal
 from models import MediaFile
 from config import settings
 
@@ -24,9 +24,12 @@ class MediaManager:
             filepath=filepath,
             mime_type=file.content_type
         )
-        
-        db.session.add(media)
-        db.session.commit()
+        session = SessionLocal()
+        try:
+            session.add(media)
+            session.commit()
+        finally:
+            session.close()
         return media
         
     def get_media(self, media_id: int) -> Optional[MediaFile]:
@@ -42,7 +45,11 @@ class MediaManager:
                 os.remove(media.filepath)
             except FileNotFoundError:
                 pass
-            db.session.delete(media)
-            db.session.commit()
+            session = SessionLocal()
+            try:
+                session.delete(media)
+                session.commit()
+            finally:
+                session.close()
             return True
         return False

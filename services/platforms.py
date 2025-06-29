@@ -1,6 +1,6 @@
 import os
-from typing import Dict, Optional
-from database import db
+from typing import Dict, Optional, List
+from database import SessionLocal
 from models import SocialAccount
 from config import settings
 
@@ -28,9 +28,12 @@ class PlatformManager:
             user_id=account_data["user_id"],
             username=account_data["username"]
         )
-        
-        db.session.add(account)
-        db.session.commit()
+        session = SessionLocal()
+        try:
+            session.add(account)
+            session.commit()
+        finally:
+            session.close()
         return account
         
     def post_content(self, account_id: int, content: str, media_urls: List[str] = None) -> Dict:

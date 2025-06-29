@@ -1,6 +1,6 @@
 import asyncio
 from typing import Dict, List
-from database import db
+from database import SessionLocal
 from models import Notification, User
 from websockets import WebSocketServerProtocol
 
@@ -36,9 +36,12 @@ class NotificationManager:
             message=message,
             notification_type=notification_type
         )
-        
-        db.session.add(notification)
-        db.session.commit()
+        session = SessionLocal()
+        try:
+            session.add(notification)
+            session.commit()
+        finally:
+            session.close()
         
         await self.broadcast(user_id, message)
         
@@ -51,6 +54,11 @@ class NotificationManager:
         notification = Notification.query.get(notification_id)
         if notification:
             notification.read = True
-            db.session.commit()
+            session = SessionLocal()
+            try:
+                session.add(notification)
+                session.commit()
+            finally:
+                session.close()
             return True
         return False

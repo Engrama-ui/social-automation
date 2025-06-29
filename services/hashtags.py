@@ -1,7 +1,7 @@
 import requests
 from datetime import datetime, timedelta
 from typing import List, Dict, Optional
-from database import db
+from database import SessionLocal
 from models import Hashtag, PostHashtag
 from config import settings
 
