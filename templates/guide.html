@@ -266,7 +266,8 @@
         }
 
         function showAccountSetup() {
-            alert('🔧 La configurazione degli account social sarà disponibile nella prossima versione!\n\nPer ora puoi:\n• Testare la creazione di post\n• Esplorare le funzionalità di programmazione\n• Visualizzare le analytics demo');
+            // Call the backend API to load the account setup section
+            loadAccountProfile();
         }
     </script>
 </body>
