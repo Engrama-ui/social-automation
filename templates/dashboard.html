@@ -82,7 +82,7 @@
                 <i class="fas fa-rocket text-blue-600 mr-2"></i>
                 Azioni Rapide
             </h2>
-            <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-4">
                 <button onclick="showSection('create-post')" class="bg-blue-600 text-white px-6 py-3 rounded-lg hover:bg-blue-700 transition duration-200">
                     <i class="fas fa-plus mr-2"></i>Crea Nuovo Post
                 </button>
@@ -91,6 +91,9 @@
                 </button>
                 <button onclick="showSection('analytics')" class="bg-purple-600 text-white px-6 py-3 rounded-lg hover:bg-purple-700 transition duration-200">
                     <i class="fas fa-chart-bar mr-2"></i>Visualizza Analytics
+                </button>
+                <button onclick="showSection('account-config')" class="bg-orange-600 text-white px-6 py-3 rounded-lg hover:bg-orange-700 transition duration-200">
+                    <i class="fas fa-cog mr-2"></i>Configura Account
                 </button>
             </div>
         </div>
@@ -297,6 +300,191 @@
             </div>
         </div>
 
+        <!-- Account Configuration Section -->
+        <div id="account-config" class="form-section hidden">
+            <h3 class="text-lg font-semibold text-gray-900 mb-4">
+                <i class="fas fa-cog text-orange-600 mr-2"></i>
+                Configurazione Account
+            </h3>
+            
+            <!-- Connected Platforms -->
+            <div class="mb-6">
+                <h4 class="text-md font-medium text-gray-800 mb-3">
+                    <i class="fas fa-share-alt text-blue-600 mr-2"></i>
+                    Piattaforme Social Collegate
+                </h4>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <!-- Facebook -->
+                    <div class="border border-gray-200 rounded-lg p-4">
+                        <div class="flex items-center justify-between">
+                            <div class="flex items-center">
+                                <i class="fab fa-facebook text-blue-600 text-2xl mr-3"></i>
+                                <div>
+                                    <h5 class="font-medium text-gray-900">Facebook</h5>
+                                    <p class="text-sm text-gray-500" id="facebook-status">Non collegato</p>
+                                </div>
+                            </div>
+                            <button onclick="connectPlatform('facebook')" id="facebook-btn" class="bg-blue-600 text-white px-4 py-2 rounded-md hover:bg-blue-700 text-sm">
+                                Collega
+                            </button>
+                        </div>
+                    </div>
+                    
+                    <!-- Instagram -->
+                    <div class="border border-gray-200 rounded-lg p-4">
+                        <div class="flex items-center justify-between">
+                            <div class="flex items-center">
+                                <i class="fab fa-instagram text-pink-600 text-2xl mr-3"></i>
+                                <div>
+                                    <h5 class="font-medium text-gray-900">Instagram</h5>
+                                    <p class="text-sm text-gray-500" id="instagram-status">Non collegato</p>
+                                </div>
+                            </div>
+                            <button onclick="connectPlatform('instagram')" id="instagram-btn" class="bg-pink-600 text-white px-4 py-2 rounded-md hover:bg-pink-700 text-sm">
+                                Collega
+                            </button>
+                        </div>
+                    </div>
+                    
+                    <!-- Twitter -->
+                    <div class="border border-gray-200 rounded-lg p-4">
+                        <div class="flex items-center justify-between">
+                            <div class="flex items-center">
+                                <i class="fab fa-twitter text-blue-400 text-2xl mr-3"></i>
+                                <div>
+                                    <h5 class="font-medium text-gray-900">Twitter/X</h5>
+                                    <p class="text-sm text-gray-500" id="twitter-status">Non collegato</p>
+                                </div>
+                            </div>
+                            <button onclick="connectPlatform('twitter')" id="twitter-btn" class="bg-blue-400 text-white px-4 py-2 rounded-md hover:bg-blue-500 text-sm">
+                                Collega
+                            </button>
+                        </div>
+                    </div>
+                    
+                    <!-- LinkedIn -->
+                    <div class="border border-gray-200 rounded-lg p-4">
+                        <div class="flex items-center justify-between">
+                            <div class="flex items-center">
+                                <i class="fab fa-linkedin text-blue-700 text-2xl mr-3"></i>
+                                <div>
+                                    <h5 class="font-medium text-gray-900">LinkedIn</h5>
+                                    <p class="text-sm text-gray-500" id="linkedin-status">Non collegato</p>
+                                </div>
+                            </div>
+                            <button onclick="connectPlatform('linkedin')" id="linkedin-btn" class="bg-blue-700 text-white px-4 py-2 rounded-md hover:bg-blue-800 text-sm">
+                                Collega
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                <div class="mt-4 p-4 bg-blue-50 rounded-lg">
+                    <div class="flex">
+                        <i class="fas fa-info-circle text-blue-500 mr-2 mt-1"></i>
+                        <div>
+                            <h5 class="text-sm font-medium text-blue-800">Come collegare un account social</h5>
+                            <p class="text-sm text-blue-700 mt-1">
+                                Per collegare un account social, avrai bisogno dei token di accesso API. 
+                                Consulta la nostra <a href="/guide" class="underline">guida passo-passo</a> 
+                                per istruzioni dettagliate.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Account Settings -->
+            <div class="mb-6">
+                <h4 class="text-md font-medium text-gray-800 mb-3">
+                    <i class="fas fa-user-cog text-green-600 mr-2"></i>
+                    Impostazioni Profilo
+                </h4>
+                <form onsubmit="saveAccountSettings(event)">
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">Nome Utente</label>
+                            <input 
+                                type="text" 
+                                id="username" 
+                                class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-orange-500"
+                                placeholder="Il tuo nome utente"
+                                value="Utente Demo"
+                            >
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">Email</label>
+                            <input 
+                                type="email" 
+                                id="email" 
+                                class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-orange-500"
+                                placeholder="tua-email@esempio.com"
+                                value="demo@esempio.com"
+                            >
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">Fuso Orario</label>
+                            <select 
+                                id="timezone" 
+                                class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-orange-500"
+                            >
+                                <option value="Europe/Rome" selected>Europa/Roma (CEST)</option>
+                                <option value="Europe/London">Europa/Londra (GMT)</option>
+                                <option value="America/New_York">America/New York (EST)</option>
+                                <option value="America/Los_Angeles">America/Los Angeles (PST)</option>
+                            </select>
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">Lingua</label>
+                            <select 
+                                id="language" 
+                                class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-orange-500"
+                            >
+                                <option value="it" selected>Italiano</option>
+                                <option value="en">English</option>
+                                <option value="es">Español</option>
+                                <option value="fr">Français</option>
+                            </select>
+                        </div>
+                    </div>
+                    
+                    <!-- Notification Preferences -->
+                    <div class="mt-6">
+                        <h5 class="text-sm font-medium text-gray-800 mb-3">
+                            <i class="fas fa-bell text-blue-600 mr-2"></i>
+                            Preferenze Notifiche
+                        </h5>
+                        <div class="space-y-3">
+                            <label class="flex items-center">
+                                <input type="checkbox" class="mr-3" checked>
+                                <span class="text-sm text-gray-700">Notifiche email per post pubblicati</span>
+                            </label>
+                            <label class="flex items-center">
+                                <input type="checkbox" class="mr-3" checked>
+                                <span class="text-sm text-gray-700">Notifiche per engagement elevato</span>
+                            </label>
+                            <label class="flex items-center">
+                                <input type="checkbox" class="mr-3">
+                                <span class="text-sm text-gray-700">Reportistica settimanale via email</span>
+                            </label>
+                            <label class="flex items-center">
+                                <input type="checkbox" class="mr-3">
+                                <span class="text-sm text-gray-700">Suggerimenti di ottimizzazione</span>
+                            </label>
+                        </div>
+                    </div>
+                    
+                    <div class="flex justify-end mt-6">
+                        <button type="button" onclick="hideSection('account-config')" class="mr-3 px-4 py-2 text-gray-600 border border-gray-300 rounded-md hover:bg-gray-50">
+                            Annulla
+                        </button>
+                        <button type="submit" class="px-6 py-2 bg-orange-600 text-white rounded-md hover:bg-orange-700">
+                            <i class="fas fa-save mr-2"></i>Salva Impostazioni
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+
         <!-- Recent Activity -->
         <div class="form-section">
             <h3 class="text-lg font-semibold text-gray-900 mb-4">
@@ -328,6 +516,8 @@
 
         // Funzioni per mostrare/nascondere sezioni
         function showSection(sectionId) {
+            console.log('Trying to show section:', sectionId);
+            
             // Nascondi tutte le sezioni nascoste
             document.querySelectorAll('.form-section').forEach(el => {
                 if (el.id && el.id !== sectionId && !el.classList.contains('hidden')) {
@@ -340,9 +530,13 @@
             
             // Mostra la sezione richiesta
             const section = document.getElementById(sectionId);
+            console.log('Found section:', section);
             if (section) {
                 section.classList.remove('hidden');
                 section.scrollIntoView({ behavior: 'smooth' });
+                console.log('Section shown successfully:', sectionId);
+            } else {
+                console.error('Section not found:', sectionId);
             }
             
             // Carica dati specifici per la sezione
@@ -561,6 +755,148 @@
                     </div>
                 </div>
             `;
+        }
+
+        // Funzioni per la configurazione account
+        async function connectPlatform(platform) {
+            const btnId = platform + '-btn';
+            const statusId = platform + '-status';
+            const btn = document.getElementById(btnId);
+            const status = document.getElementById(statusId);
+            
+            // Mostra loading
+            const originalText = btn.innerHTML;
+            btn.innerHTML = '<i class="fas fa-spinner fa-spin mr-1"></i>Collegando...';
+            btn.disabled = true;
+            
+            try {
+                // Simula processo di collegamento
+                await new Promise(resolve => setTimeout(resolve, 2000));
+                
+                // Simula successo (70% delle volte)
+                if (Math.random() > 0.3) {
+                    status.textContent = 'Collegato ✅';
+                    status.className = 'text-sm text-green-600';
+                    btn.innerHTML = '<i class="fas fa-unlink mr-1"></i>Scollega';
+                    btn.className = 'bg-red-600 text-white px-4 py-2 rounded-md hover:bg-red-700 text-sm';
+                    btn.onclick = () => disconnectPlatform(platform);
+                    
+                    // Mostra notifica di successo
+                    showNotification(`✅ ${platform.charAt(0).toUpperCase() + platform.slice(1)} collegato con successo!`, 'success');
+                    
+                    // Aggiorna attività recente
+                    addRecentActivity(`Collegato account ${platform.charAt(0).toUpperCase() + platform.slice(1)}`, 'connect');
+                } else {
+                    throw new Error('Errore di connessione');
+                }
+            } catch (error) {
+                status.textContent = 'Errore di connessione ❌';
+                status.className = 'text-sm text-red-600';
+                btn.innerHTML = originalText;
+                btn.disabled = false;
+                
+                showNotification(`❌ Errore nel collegamento di ${platform}. Riprova più tardi.`, 'error');
+            }
+        }
+        
+        async function disconnectPlatform(platform) {
+            if (!confirm(`Sei sicuro di voler scollegare ${platform}?`)) {
+                return;
+            }
+            
+            const btnId = platform + '-btn';
+            const statusId = platform + '-status';
+            const btn = document.getElementById(btnId);
+            const status = document.getElementById(statusId);
+            
+            status.textContent = 'Non collegato';
+            status.className = 'text-sm text-gray-500';
+            btn.innerHTML = 'Collega';
+            btn.className = getButtonColorClass(platform) + ' text-white px-4 py-2 rounded-md hover:opacity-90 text-sm';
+            btn.onclick = () => connectPlatform(platform);
+            
+            showNotification(`📴 ${platform.charAt(0).toUpperCase() + platform.slice(1)} scollegato`, 'info');
+            addRecentActivity(`Scollegato account ${platform.charAt(0).toUpperCase() + platform.slice(1)}`, 'disconnect');
+        }
+        
+        function getButtonColorClass(platform) {
+            const colors = {
+                facebook: 'bg-blue-600 hover:bg-blue-700',
+                instagram: 'bg-pink-600 hover:bg-pink-700',
+                twitter: 'bg-blue-400 hover:bg-blue-500',
+                linkedin: 'bg-blue-700 hover:bg-blue-800'
+            };
+            return colors[platform] || 'bg-gray-600 hover:bg-gray-700';
+        }
+        
+        async function saveAccountSettings(event) {
+            event.preventDefault();
+            
+            const submitBtn = event.target.querySelector('button[type="submit"]');
+            const originalText = submitBtn.innerHTML;
+            submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin mr-2"></i>Salvando...';
+            submitBtn.disabled = true;
+            
+            try {
+                // Simula salvataggio
+                await new Promise(resolve => setTimeout(resolve, 1500));
+                
+                showNotification('✅ Impostazioni salvate con successo!', 'success');
+                addRecentActivity('Aggiornate impostazioni profilo', 'settings');
+                
+            } catch (error) {
+                showNotification('❌ Errore nel salvataggio. Riprova più tardi.', 'error');
+            } finally {
+                submitBtn.innerHTML = originalText;
+                submitBtn.disabled = false;
+            }
+        }
+        
+        function showNotification(message, type = 'info') {
+            // Crea elemento notifica
+            const notification = document.createElement('div');
+            notification.className = `fixed top-4 right-4 p-4 rounded-lg shadow-lg z-50 max-w-sm ${getNotificationColorClass(type)}`;
+            notification.innerHTML = `
+                <div class="flex items-center">
+                    <span class="flex-1">${message}</span>
+                    <button onclick="this.parentElement.parentElement.remove()" class="ml-2 text-lg">×</button>
+                </div>
+            `;
+            
+            document.body.appendChild(notification);
+            
+            // Auto-remove dopo 5 secondi
+            setTimeout(() => {
+                if (notification.parentElement) {
+                    notification.remove();
+                }
+            }, 5000);
+        }
+        
+        function getNotificationColorClass(type) {
+            const colors = {
+                success: 'bg-green-100 border-green-500 text-green-800 border-l-4',
+                error: 'bg-red-100 border-red-500 text-red-800 border-l-4',
+                info: 'bg-blue-100 border-blue-500 text-blue-800 border-l-4',
+                warning: 'bg-yellow-100 border-yellow-500 text-yellow-800 border-l-4'
+            };
+            return colors[type] || colors.info;
+        }
+        
+        function addRecentActivity(action, type) {
+            const activities = JSON.parse(localStorage.getItem('recentActivities') || '[]');
+            const newActivity = {
+                action,
+                type,
+                timestamp: new Date().toISOString(),
+                id: Date.now()
+            };
+            
+            activities.unshift(newActivity);
+            activities.splice(10); // Mantieni solo le ultime 10 attività
+            
+            localStorage.setItem('recentActivities', JSON.stringify(activities));
+            loadRecentActivity(); // Ricarica la visualizzazione
         }
 
         // Inizializza la dashboard al caricamento
