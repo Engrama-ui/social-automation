@@ -86,6 +86,17 @@ class SystemStatus(Base):
     cpu_usage = Column(Float)
     memory_usage = Column(Float)
 
+class ContentTemplate(Base):
+    __tablename__ = "content_templates"
+
+    id = Column(Integer, primary_key=True, index=True)
+    name = Column(String, nullable=False)
+    content = Column(String, nullable=False)
+    variables = Column(JSON, default={})
+    # Se vuoi collegare il template a un utente, decommenta la riga seguente:
+    # user_id = Column(Integer, ForeignKey("users.id"))
+    # user = relationship("User")
+
 # Aggiungi le relazioni mancanti
 User.accounts = relationship("SocialAccount", back_populates="user")
 SocialAccount.posts = relationship("ScheduledPost", back_populates="account")
