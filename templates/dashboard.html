@@ -7,6 +7,45 @@
     <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        .tooltip {
+            position: relative;
+            display: inline-block;
+        }
+        .tooltip .tooltiptext {
+            visibility: hidden;
+            width: 200px;
+            background-color: #555;
+            color: #fff;
+            text-align: center;
+            border-radius: 6px;
+            padding: 5px;
+            position: absolute;
+            z-index: 1;
+            bottom: 125%;
+            left: 50%;
+            margin-left: -100px;
+            opacity: 0;
+            transition: opacity 0.3s;
+            font-size: 12px;
+        }
+        .tooltip:hover .tooltiptext {
+            visibility: visible;
+            opacity: 1;
+        }
+        .help-text {
+            font-size: 0.875rem;
+            color: #6b7280;
+            margin-top: 4px;
+        }
+        .form-section {
+            background: white;
+            border-radius: 8px;
+            padding: 24px;
+            margin-bottom: 20px;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+        }
+    </style>
 </head>
 <body class="bg-gray-100 min-h-screen">
     <!-- Navigation -->
@@ -20,6 +59,9 @@
                     </a>
                 </div>
                 <div class="flex items-center space-x-4">
+                    <a href="/help" class="text-orange-600 hover:text-orange-800">
+                        <i class="fas fa-question-circle mr-1"></i>Aiuto
+                    </a>
                     <a href="/docs" class="text-blue-600 hover:text-blue-800">API Docs</a>
                     <a href="/" class="text-gray-600 hover:text-gray-800">Home</a>
                 </div>
@@ -28,138 +70,518 @@
     </nav>
 
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-        .dashboard {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 20px;
-        }
-        .card {
-            background: white;
-            border-radius: 8px;
-            padding: 20px;
-            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
-        }
-        .card-header {
-            font-size: 18px;
-            font-weight: bold;
-            margin-bottom: 15px;
-            color: #333;
-        }
-        .metric {
-            font-size: 24px;
-            font-weight: bold;
-            color: #4CAF50;
-        }
-        .notification {
-            padding: 10px;
-            margin-bottom: 10px;
-            border-left: 4px solid #4CAF50;
-            background-color: #f9f9f9;
-        }
-        .notification.warning {
-            border-left-color: #FFC107;
-        }
-        .notification.alert {
-            border-left-color: #F44336;
-        }
-    </style>
-</head>
-<body>
-    <h1>Engagement Dashboard</h1>
-    <div class="dashboard">
-        <div class="card">
-            <div class="card-header">Engagement Summary</div>
-            <div id="summary-metrics">
-                <!-- Will be populated by JavaScript -->
+        <!-- Header -->
+        <div class="mb-8">
+            <h1 class="text-3xl font-bold text-gray-900 mb-2">Dashboard Automazione Social Media</h1>
+            <p class="text-gray-600">Gestisci i tuoi contenuti, programma i post e monitora l'engagement in un unico posto</p>
+        </div>
+
+        <!-- Quick Actions Section -->
+        <div class="form-section mb-8">
+            <h2 class="text-xl font-semibold text-gray-900 mb-4">
+                <i class="fas fa-rocket text-blue-600 mr-2"></i>
+                Azioni Rapide
+            </h2>
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+                <button onclick="showSection('create-post')" class="bg-blue-600 text-white px-6 py-3 rounded-lg hover:bg-blue-700 transition duration-200">
+                    <i class="fas fa-plus mr-2"></i>Crea Nuovo Post
+                </button>
+                <button onclick="showSection('schedule-post')" class="bg-green-600 text-white px-6 py-3 rounded-lg hover:bg-green-700 transition duration-200">
+                    <i class="fas fa-calendar mr-2"></i>Programma Post
+                </button>
+                <button onclick="showSection('analytics')" class="bg-purple-600 text-white px-6 py-3 rounded-lg hover:bg-purple-700 transition duration-200">
+                    <i class="fas fa-chart-bar mr-2"></i>Visualizza Analytics
+                </button>
             </div>
         </div>
-        
-        <div class="card">
-            <div class="card-header">Recent Activity</div>
-            <div id="recent-activity">
-                <!-- Will be populated by JavaScript -->
+
+        <!-- Create Post Section -->
+        <div id="create-post" class="form-section hidden">
+            <h3 class="text-lg font-semibold text-gray-900 mb-4">
+                <i class="fas fa-edit text-blue-600 mr-2"></i>
+                Crea Nuovo Post
+            </h3>
+            <form onsubmit="createPost(event)">
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700 mb-2">
+                            Testo del Post
+                            <span class="tooltip">
+                                <i class="fas fa-question-circle text-gray-400 ml-1"></i>
+                                <span class="tooltiptext">Scrivi il contenuto principale del tuo post. Usa hashtag (#) e mention (@) per aumentare l'engagement</span>
+                            </span>
+                        </label>
+                        <textarea 
+                            id="post-content" 
+                            rows="4" 
+                            class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                            placeholder="Cosa vuoi condividere oggi? Usa hashtag come #marketing #socialmedia"
+                            required
+                        ></textarea>
+                        <div class="help-text">💡 Tip: I post con 1-3 hashtag ottengono più engagement</div>
+                    </div>
+                    
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700 mb-2">
+                            Piattaforme
+                            <span class="tooltip">
+                                <i class="fas fa-question-circle text-gray-400 ml-1"></i>
+                                <span class="tooltiptext">Seleziona su quali social network pubblicare questo contenuto</span>
+                            </span>
+                        </label>
+                        <div class="space-y-2">
+                            <label class="flex items-center">
+                                <input type="checkbox" name="platforms" value="facebook" class="mr-2">
+                                <i class="fab fa-facebook text-blue-600 mr-2"></i>Facebook
+                            </label>
+                            <label class="flex items-center">
+                                <input type="checkbox" name="platforms" value="twitter" class="mr-2">
+                                <i class="fab fa-twitter text-blue-400 mr-2"></i>Twitter/X
+                            </label>
+                            <label class="flex items-center">
+                                <input type="checkbox" name="platforms" value="instagram" class="mr-2">
+                                <i class="fab fa-instagram text-pink-600 mr-2"></i>Instagram
+                            </label>
+                            <label class="flex items-center">
+                                <input type="checkbox" name="platforms" value="linkedin" class="mr-2">
+                                <i class="fab fa-linkedin text-blue-700 mr-2"></i>LinkedIn
+                            </label>
+                        </div>
+                        <div class="help-text">📱 Seleziona almeno una piattaforma per pubblicare</div>
+                    </div>
+                </div>
+                
+                <div class="mt-6">
+                    <label class="block text-sm font-medium text-gray-700 mb-2">
+                        Media (Opzionale)
+                        <span class="tooltip">
+                            <i class="fas fa-question-circle text-gray-400 ml-1"></i>
+                            <span class="tooltiptext">Carica immagini o video per rendere il tuo post più accattivante. Formati supportati: JPG, PNG, MP4</span>
+                        </span>
+                    </label>
+                    <input 
+                        type="file" 
+                        id="media-upload" 
+                        accept="image/*,video/*" 
+                        multiple
+                        class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                    >
+                    <div class="help-text">🖼️ I post con immagini ricevono il 650% in più di engagement</div>
+                </div>
+                
+                <div class="flex justify-end mt-6">
+                    <button type="button" onclick="hideSection('create-post')" class="mr-3 px-4 py-2 text-gray-600 border border-gray-300 rounded-md hover:bg-gray-50">
+                        Annulla
+                    </button>
+                    <button type="submit" class="px-6 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700">
+                        <i class="fas fa-paper-plane mr-2"></i>Pubblica Ora
+                    </button>
+                </div>
+            </form>
+        </div>
+
+        <!-- Schedule Post Section -->
+        <div id="schedule-post" class="form-section hidden">
+            <h3 class="text-lg font-semibold text-gray-900 mb-4">
+                <i class="fas fa-calendar-alt text-green-600 mr-2"></i>
+                Programma Post
+            </h3>
+            <form onsubmit="schedulePost(event)">
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700 mb-2">
+                            Data e Ora di Pubblicazione
+                            <span class="tooltip">
+                                <i class="fas fa-question-circle text-gray-400 ml-1"></i>
+                                <span class="tooltiptext">Scegli quando pubblicare il post. Gli orari migliori sono 9-11 e 19-21</span>
+                            </span>
+                        </label>
+                        <input 
+                            type="datetime-local" 
+                            id="schedule-datetime"
+                            class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-green-500"
+                            required
+                        >
+                        <div class="help-text">⏰ Orari consigliati: Lunedì-Venerdì 9-11, 19-21</div>
+                    </div>
+                    
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700 mb-2">
+                            Template Post
+                            <span class="tooltip">
+                                <i class="fas fa-question-circle text-gray-400 ml-1"></i>
+                                <span class="tooltiptext">Scegli un template predefinito o crea contenuto personalizzato</span>
+                            </span>
+                        </label>
+                        <select 
+                            id="post-template"
+                            class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-green-500"
+                            onchange="loadTemplate()"
+                        >
+                            <option value="">Seleziona un template...</option>
+                            <option value="promo">🎯 Post Promozionale</option>
+                            <option value="education">📚 Contenuto Educativo</option>
+                            <option value="engagement">💬 Post di Engagement</option>
+                            <option value="custom">✏️ Contenuto Personalizzato</option>
+                        </select>
+                        <div class="help-text">📝 I template ti aiutano a creare contenuti efficaci</div>
+                    </div>
+                </div>
+                
+                <div class="mt-6">
+                    <label class="block text-sm font-medium text-gray-700 mb-2">Anteprima Contenuto</label>
+                    <div id="template-preview" class="w-full p-4 border border-gray-300 rounded-md bg-gray-50 min-h-24">
+                        <span class="text-gray-500">Seleziona un template per vedere l'anteprima</span>
+                    </div>
+                </div>
+                
+                <div class="flex justify-end mt-6">
+                    <button type="button" onclick="hideSection('schedule-post')" class="mr-3 px-4 py-2 text-gray-600 border border-gray-300 rounded-md hover:bg-gray-50">
+                        Annulla
+                    </button>
+                    <button type="submit" class="px-6 py-2 bg-green-600 text-white rounded-md hover:bg-green-700">
+                        <i class="fas fa-clock mr-2"></i>Programma Post
+                    </button>
+                </div>
+            </form>
+        </div>
+
+        <!-- Analytics Section -->
+        <div id="analytics" class="form-section hidden">
+            <h3 class="text-lg font-semibold text-gray-900 mb-4">
+                <i class="fas fa-chart-line text-purple-600 mr-2"></i>
+                Analytics e Metriche
+            </h3>
+            
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-6">
+                <div class="bg-blue-50 p-4 rounded-lg">
+                    <div class="flex items-center">
+                        <i class="fas fa-eye text-blue-600 text-xl mr-3"></i>
+                        <div>
+                            <p class="text-sm text-gray-600">Visualizzazioni Totali</p>
+                            <p class="text-2xl font-bold text-blue-600" id="total-views">--</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="bg-green-50 p-4 rounded-lg">
+                    <div class="flex items-center">
+                        <i class="fas fa-heart text-green-600 text-xl mr-3"></i>
+                        <div>
+                            <p class="text-sm text-gray-600">Engagement Rate</p>
+                            <p class="text-2xl font-bold text-green-600" id="engagement-rate">--</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="bg-purple-50 p-4 rounded-lg">
+                    <div class="flex items-center">
+                        <i class="fas fa-users text-purple-600 text-xl mr-3"></i>
+                        <div>
+                            <p class="text-sm text-gray-600">Nuovi Follower</p>
+                            <p class="text-2xl font-bold text-purple-600" id="new-followers">--</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+                <div>
+                    <h4 class="font-medium text-gray-900 mb-3">Engagement nel Tempo</h4>
+                    <canvas id="engagement-chart" height="200"></canvas>
+                </div>
+                <div>
+                    <h4 class="font-medium text-gray-900 mb-3">Top Post Questa Settimana</h4>
+                    <div id="top-posts" class="space-y-3">
+                        <!-- Populated by JavaScript -->
+                    </div>
+                </div>
             </div>
         </div>
-        
-        <div class="card">
-            <div class="card-header">Sentiment Analysis</div>
-            <canvas id="sentiment-chart"></canvas>
-        </div>
-        
-        <div class="card">
-            <div class="card-header">Notifications</div>
-            <div id="notifications">
-                <!-- Will be populated by JavaScript -->
+
+        <!-- Recent Activity -->
+        <div class="form-section">
+            <h3 class="text-lg font-semibold text-gray-900 mb-4">
+                <i class="fas fa-clock text-gray-600 mr-2"></i>
+                Attività Recente
+            </h3>
+            <div id="recent-activity" class="space-y-3">
+                <!-- Populated by JavaScript -->
             </div>
         </div>
     </div>
 
-    <script src="https://cdn.jsdelivr.net/npm/chart.js@3.7.1/dist/chart.min.js"></script>
     <script>
-        // Fetch engagement data from API
-        async function loadDashboard() {
-            try {
-                const response = await fetch('/api/engagement/account/1/summary');
-                const summary = await response.json();
-                
-                // Display summary metrics
-                document.getElementById('summary-metrics').innerHTML = `
-                    <div>Total Likes: <span class="metric">${summary.total_likes}</span></div>
-                    <div>Total Comments: <span class="metric">${summary.total_comments}</span></div>
-                    <div>Total Shares: <span class="metric">${summary.total_shares}</span></div>
-                    <div>Average Sentiment: <span class="metric">${summary.average_sentiment.toFixed(2)}</span></div>
-                `;
-                
-                // Load recent activity
-                const activityResponse = await fetch('/api/engagement/account/1/recent?limit=5');
-                const activities = await activityResponse.json();
-                
-                let activityHTML = '';
-                activities.forEach(activity => {
-                    activityHTML += `
-                        <div class="notification">
-                            Post ${activity.post_id}: 
-                            ${activity.likes} likes, 
-                            ${activity.comments} comments,
-                            Sentiment: ${activity.sentiment_score.toFixed(2)}
-                        </div>
-                    `;
-                });
-                document.getElementById('recent-activity').innerHTML = activityHTML;
-                
-                // Setup sentiment chart
-                const ctx = document.getElementById('sentiment-chart').getContext('2d');
-                new Chart(ctx, {
-                    type: 'line',
-                    data: {
-                        labels: activities.map(a => `Post ${a.post_id}`),
-                        datasets: [{
-                            label: 'Sentiment Score',
-                            data: activities.map(a => a.sentiment_score),
-                            borderColor: 'rgb(75, 192, 192)',
-                            tension: 0.1
-                        }]
-                    }
-                });
-                
-                // Setup WebSocket for real-time notifications
-                const ws = new WebSocket(`ws://${window.location.host}/api/notifications/ws?token=YOUR_TOKEN`);
-                
-                ws.onmessage = (event) => {
-                    const notificationsDiv = document.getElementById('notifications');
-                    notificationsDiv.innerHTML = `
-                        <div class="notification">${event.data}</div>
-                        ${notificationsDiv.innerHTML}
-                    `;
-                };
-                
-            } catch (error) {
-                console.error('Error loading dashboard:', error);
+        // Templates per i post
+        const postTemplates = {
+            promo: {
+                title: "🎯 Post Promozionale",
+                content: "🌟 Scopri la nostra ultima offerta! \n\n✨ Caratteristiche principali:\n• [Feature 1]\n• [Feature 2]\n• [Feature 3]\n\n💰 Offerta limitata - Non perdere questa occasione!\n\n#promo #offerta #limitedtime"
+            },
+            education: {
+                title: "📚 Contenuto Educativo", 
+                content: "💡 Lo sapevi che...?\n\n📖 Oggi parliamo di [ARGOMENTO]\n\n🔍 Punti chiave:\n1. [Punto 1]\n2. [Punto 2]\n3. [Punto 3]\n\n💬 Cosa ne pensi? Condividi la tua esperienza nei commenti!\n\n#education #tips #learning"
+            },
+            engagement: {
+                title: "💬 Post di Engagement",
+                content: "🤔 Domanda del giorno!\n\n❓ [LA TUA DOMANDA QUI]\n\nA) [Opzione A]\nB) [Opzione B]\nC) [Opzione C]\n\n💭 Scrivi la tua risposta nei commenti e tagga un amico!\n\n#poll #question #engagement #community"
+            }
+        };
+
+        // Funzioni per mostrare/nascondere sezioni
+        function showSection(sectionId) {
+            // Nascondi tutte le sezioni nascoste
+            document.querySelectorAll('.form-section').forEach(el => {
+                if (el.id && el.id !== sectionId && !el.classList.contains('hidden')) {
+                    // Non nascondere la sezione delle azioni rapide e attività recente
+                    if (el.querySelector('h2') && el.querySelector('h2').textContent.includes('Azioni Rapide')) return;
+                    if (el.querySelector('h3') && el.querySelector('h3').textContent.includes('Attività Recente')) return;
+                    el.classList.add('hidden');
+                }
+            });
+            
+            // Mostra la sezione richiesta
+            const section = document.getElementById(sectionId);
+            if (section) {
+                section.classList.remove('hidden');
+                section.scrollIntoView({ behavior: 'smooth' });
+            }
+            
+            // Carica dati specifici per la sezione
+            if (sectionId === 'analytics') {
+                loadAnalytics();
             }
         }
-        
-        // Load dashboard when page loads
-        window.addEventListener('load', loadDashboard);
+
+        function hideSection(sectionId) {
+            document.getElementById(sectionId).classList.add('hidden');
+        }
+
+        // Funzione per caricare template
+        function loadTemplate() {
+            const templateSelect = document.getElementById('post-template');
+            const preview = document.getElementById('template-preview');
+            const selectedTemplate = templateSelect.value;
+
+            if (selectedTemplate && postTemplates[selectedTemplate]) {
+                const template = postTemplates[selectedTemplate];
+                preview.innerHTML = `
+                    <div class="bg-white p-4 rounded border">
+                        <h4 class="font-medium text-gray-900 mb-2">${template.title}</h4>
+                        <div class="text-gray-700 whitespace-pre-line">${template.content}</div>
+                    </div>
+                `;
+            } else if (selectedTemplate === 'custom') {
+                preview.innerHTML = `
+                    <textarea 
+                        rows="6" 
+                        class="w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-green-500"
+                        placeholder="Scrivi qui il tuo contenuto personalizzato..."
+                        id="custom-content"
+                    ></textarea>
+                `;
+            } else {
+                preview.innerHTML = '<span class="text-gray-500">Seleziona un template per vedere l\'anteprima</span>';
+            }
+        }
+
+        // Funzione per creare post
+        async function createPost(event) {
+            event.preventDefault();
+            
+            const content = document.getElementById('post-content').value;
+            const platforms = Array.from(document.querySelectorAll('input[name="platforms"]:checked')).map(cb => cb.value);
+            const mediaFiles = document.getElementById('media-upload').files;
+            
+            if (platforms.length === 0) {
+                alert('⚠️ Seleziona almeno una piattaforma per pubblicare!');
+                return;
+            }
+            
+            // Mostra loading
+            const submitBtn = event.target.querySelector('button[type="submit"]');
+            const originalText = submitBtn.innerHTML;
+            submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin mr-2"></i>Pubblicando...';
+            submitBtn.disabled = true;
+            
+            try {
+                // Simula chiamata API
+                await new Promise(resolve => setTimeout(resolve, 2000));
+                
+                alert('✅ Post pubblicato con successo su ' + platforms.join(', ') + '!');
+                event.target.reset();
+                hideSection('create-post');
+                loadRecentActivity();
+                
+            } catch (error) {
+                alert('❌ Errore durante la pubblicazione: ' + error.message);
+            } finally {
+                submitBtn.innerHTML = originalText;
+                submitBtn.disabled = false;
+            }
+        }
+
+        // Funzione per programmare post
+        async function schedulePost(event) {
+            event.preventDefault();
+            
+            const datetime = document.getElementById('schedule-datetime').value;
+            const template = document.getElementById('post-template').value;
+            
+            if (!datetime) {
+                alert('⚠️ Seleziona data e ora per la programmazione!');
+                return;
+            }
+            
+            const scheduleDate = new Date(datetime);
+            const now = new Date();
+            
+            if (scheduleDate <= now) {
+                alert('⚠️ La data di programmazione deve essere nel futuro!');
+                return;
+            }
+            
+            // Mostra loading
+            const submitBtn = event.target.querySelector('button[type="submit"]');
+            const originalText = submitBtn.innerHTML;
+            submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin mr-2"></i>Programmando...';
+            submitBtn.disabled = true;
+            
+            try {
+                // Simula chiamata API
+                await new Promise(resolve => setTimeout(resolve, 1500));
+                
+                alert(`✅ Post programmato per ${scheduleDate.toLocaleString('it-IT')}!`);
+                event.target.reset();
+                document.getElementById('template-preview').innerHTML = '<span class="text-gray-500">Seleziona un template per vedere l\'anteprima</span>';
+                hideSection('schedule-post');
+                
+            } catch (error) {
+                alert('❌ Errore durante la programmazione: ' + error.message);
+            } finally {
+                submitBtn.innerHTML = originalText;
+                submitBtn.disabled = false;
+            }
+        }
+
+        // Funzione per caricare analytics
+        async function loadAnalytics() {
+            try {
+                // Simula caricamento dati analytics
+                const mockData = {
+                    totalViews: 15420,
+                    engagementRate: 4.2,
+                    newFollowers: 127
+                };
+                
+                document.getElementById('total-views').textContent = mockData.totalViews.toLocaleString();
+                document.getElementById('engagement-rate').textContent = mockData.engagementRate + '%';
+                document.getElementById('new-followers').textContent = '+' + mockData.newFollowers;
+                
+                // Crea grafico engagement
+                const ctx = document.getElementById('engagement-chart');
+                if (ctx && !ctx.chart) {
+                    ctx.chart = new Chart(ctx, {
+                        type: 'line',
+                        data: {
+                            labels: ['Lun', 'Mar', 'Mer', 'Gio', 'Ven', 'Sab', 'Dom'],
+                            datasets: [{
+                                label: 'Engagement Rate %',
+                                data: [3.2, 4.1, 3.8, 4.5, 4.2, 5.1, 3.9],
+                                borderColor: '#8B5CF6',
+                                backgroundColor: 'rgba(139, 92, 246, 0.1)',
+                                tension: 0.4,
+                                fill: true
+                            }]
+                        },
+                        options: {
+                            responsive: true,
+                            plugins: {
+                                legend: {
+                                    display: false
+                                }
+                            },
+                            scales: {
+                                y: {
+                                    beginAtZero: true,
+                                    max: 6
+                                }
+                            }
+                        }
+                    });
+                }
+                
+                // Carica top posts
+                const topPosts = document.getElementById('top-posts');
+                topPosts.innerHTML = `
+                    <div class="bg-gray-50 p-3 rounded">
+                        <div class="flex justify-between items-center">
+                            <span class="text-sm text-gray-600">Post del 26 Giugno</span>
+                            <span class="text-sm font-medium text-green-600">↗ 8.2% engagement</span>
+                        </div>
+                        <p class="text-gray-800 mt-1">Tips per migliorare la tua strategia social...</p>
+                    </div>
+                    <div class="bg-gray-50 p-3 rounded">
+                        <div class="flex justify-between items-center">
+                            <span class="text-sm text-gray-600">Post del 25 Giugno</span>
+                            <span class="text-sm font-medium text-green-600">↗ 6.7% engagement</span>
+                        </div>
+                        <p class="text-gray-800 mt-1">Novità in arrivo! Resta sintonizzato...</p>
+                    </div>
+                `;
+                
+            } catch (error) {
+                console.error('Errore nel caricamento analytics:', error);
+            }
+        }
+
+        // Funzione per caricare attività recente
+        function loadRecentActivity() {
+            const recentActivity = document.getElementById('recent-activity');
+            const now = new Date();
+            
+            recentActivity.innerHTML = `
+                <div class="flex items-center p-3 bg-green-50 rounded-lg">
+                    <i class="fas fa-check-circle text-green-600 mr-3"></i>
+                    <div class="flex-1">
+                        <p class="text-sm font-medium text-gray-900">Post pubblicato con successo</p>
+                        <p class="text-xs text-gray-500">${now.toLocaleTimeString('it-IT')} - Facebook, Instagram</p>
+                    </div>
+                </div>
+                <div class="flex items-center p-3 bg-blue-50 rounded-lg">
+                    <i class="fas fa-clock text-blue-600 mr-3"></i>
+                    <div class="flex-1">
+                        <p class="text-sm font-medium text-gray-900">Post programmato</p>
+                        <p class="text-xs text-gray-500">Oggi 18:00 - LinkedIn</p>
+                    </div>
+                </div>
+                <div class="flex items-center p-3 bg-yellow-50 rounded-lg">
+                    <i class="fas fa-heart text-yellow-600 mr-3"></i>
+                    <div class="flex-1">
+                        <p class="text-sm font-medium text-gray-900">Nuovo engagement</p>
+                        <p class="text-xs text-gray-500">+25 like sul post "Tips per social media"</p>
+                    </div>
+                </div>
+            `;
+        }
+
+        // Inizializza la dashboard al caricamento
+        document.addEventListener('DOMContentLoaded', function() {
+            loadRecentActivity();
+            
+            // Imposta la data minima per la programmazione (ora attuale + 1 ora)
+            const now = new Date();
+            now.setHours(now.getHours() + 1);
+            const minDateTime = now.toISOString().slice(0, 16);
+            document.getElementById('schedule-datetime').min = minDateTime;
+            
+            // Controlla se ci sono azioni da eseguire dalla guida
+            const dashboardAction = localStorage.getItem('dashboardAction');
+            if (dashboardAction) {
+                localStorage.removeItem('dashboardAction');
+                setTimeout(() => {
+                    showSection(dashboardAction);
+                }, 500);
+            }
+        });
     </script>
 </body>
 </html>

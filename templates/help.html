@@ -1,0 +1,376 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Aiuto e FAQ - Social Media Automation</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <style>
+        .faq-item {
+            transition: all 0.3s ease;
+        }
+        .faq-content {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.3s ease;
+        }
+        .faq-content.open {
+            max-height: 1000px;
+        }
+    </style>
+</head>
+<body class="bg-gray-50 min-h-screen">
+    <!-- Navigation -->
+    <nav class="bg-white shadow-lg">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between h-16">
+                <div class="flex items-center">
+                    <a href="/" class="flex items-center">
+                        <i class="fas fa-robot text-2xl text-blue-600 mr-3"></i>
+                        <h1 class="text-xl font-bold text-gray-800">Centro Aiuto</h1>
+                    </a>
+                </div>
+                <div class="flex items-center space-x-4">
+                    <a href="/dashboard" class="text-blue-600 hover:text-blue-800">Dashboard</a>
+                    <a href="/guide" class="text-green-600 hover:text-green-800">Guida</a>
+                    <a href="/" class="text-gray-600 hover:text-gray-800">Home</a>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+        <!-- Header -->
+        <div class="text-center mb-12">
+            <h1 class="text-4xl font-bold text-gray-900 mb-4">
+                <i class="fas fa-question-circle text-blue-600 mr-3"></i>
+                Centro Aiuto
+            </h1>
+            <p class="text-xl text-gray-600">
+                Trova le risposte alle domande più frequenti e scopri come utilizzare al meglio il sistema
+            </p>
+        </div>
+
+        <!-- Search -->
+        <div class="mb-8">
+            <div class="relative">
+                <input 
+                    type="text" 
+                    id="search-faq"
+                    placeholder="Cerca nelle FAQ..."
+                    class="w-full px-4 py-3 pl-12 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+                    onkeyup="searchFAQ()"
+                >
+                <i class="fas fa-search absolute left-4 top-1/2 transform -translate-y-1/2 text-gray-400"></i>
+            </div>
+        </div>
+
+        <!-- Quick Help Cards -->
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-12">
+            <div class="bg-white p-6 rounded-lg shadow-md">
+                <div class="text-center">
+                    <i class="fas fa-rocket text-3xl text-blue-600 mb-4"></i>
+                    <h3 class="text-lg font-semibold text-gray-900 mb-2">Inizia Subito</h3>
+                    <p class="text-gray-600 mb-4">Segui la nostra guida passo-passo</p>
+                    <a href="/guide" class="bg-blue-600 text-white px-4 py-2 rounded-md hover:bg-blue-700">
+                        Guida Rapida
+                    </a>
+                </div>
+            </div>
+            
+            <div class="bg-white p-6 rounded-lg shadow-md">
+                <div class="text-center">
+                    <i class="fas fa-book text-3xl text-green-600 mb-4"></i>
+                    <h3 class="text-lg font-semibold text-gray-900 mb-2">Documentazione API</h3>
+                    <p class="text-gray-600 mb-4">Esplora tutte le funzionalità</p>
+                    <a href="/docs" class="bg-green-600 text-white px-4 py-2 rounded-md hover:bg-green-700">
+                        API Docs
+                    </a>
+                </div>
+            </div>
+            
+            <div class="bg-white p-6 rounded-lg shadow-md">
+                <div class="text-center">
+                    <i class="fas fa-play text-3xl text-purple-600 mb-4"></i>
+                    <h3 class="text-lg font-semibold text-gray-900 mb-2">Prova Subito</h3>
+                    <p class="text-gray-600 mb-4">Accedi alla dashboard</p>
+                    <a href="/dashboard" class="bg-purple-600 text-white px-4 py-2 rounded-md hover:bg-purple-700">
+                        Dashboard
+                    </a>
+                </div>
+            </div>
+        </div>
+
+        <!-- FAQ Section -->
+        <div class="bg-white rounded-lg shadow-md p-6">
+            <h2 class="text-2xl font-bold text-gray-900 mb-6">
+                <i class="fas fa-question-circle text-blue-600 mr-2"></i>
+                Domande Frequenti
+            </h2>
+
+            <div id="faq-container" class="space-y-4">
+                <!-- Posting and Scheduling -->
+                <div class="faq-item">
+                    <button onclick="toggleFAQ('faq1')" class="w-full text-left p-4 bg-gray-50 rounded-lg hover:bg-gray-100 focus:outline-none">
+                        <div class="flex justify-between items-center">
+                            <h3 class="font-semibold text-gray-900">Come creo il mio primo post?</h3>
+                            <i id="faq1-icon" class="fas fa-chevron-down text-gray-400"></i>
+                        </div>
+                    </button>
+                    <div id="faq1" class="faq-content p-4">
+                        <div class="text-gray-600">
+                            <p class="mb-3">Per creare il tuo primo post:</p>
+                            <ol class="list-decimal list-inside space-y-2">
+                                <li>Vai alla <a href="/dashboard" class="text-blue-600 hover:text-blue-800">Dashboard</a></li>
+                                <li>Clicca su "Crea Nuovo Post" nelle azioni rapide</li>
+                                <li>Scrivi il tuo contenuto nel campo "Testo del Post"</li>
+                                <li>Seleziona almeno una piattaforma (Facebook, Instagram, Twitter, LinkedIn)</li>
+                                <li>Aggiungi immagini o video se desideri (opzionale)</li>
+                                <li>Clicca "Pubblica Ora"</li>
+                            </ol>
+                            <div class="mt-3 p-3 bg-blue-50 rounded-md">
+                                <p class="text-blue-700"><strong>Suggerimento:</strong> Usa 1-3 hashtag rilevanti per aumentare la visibilità!</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="faq-item">
+                    <button onclick="toggleFAQ('faq2')" class="w-full text-left p-4 bg-gray-50 rounded-lg hover:bg-gray-100 focus:outline-none">
+                        <div class="flex justify-between items-center">
+                            <h3 class="font-semibold text-gray-900">Quando è il momento migliore per pubblicare?</h3>
+                            <i id="faq2-icon" class="fas fa-chevron-down text-gray-400"></i>
+                        </div>
+                    </button>
+                    <div id="faq2" class="faq-content p-4">
+                        <div class="text-gray-600">
+                            <p class="mb-3">Gli orari ottimali variano per ogni piattaforma:</p>
+                            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                                <div class="p-3 bg-blue-50 rounded-md">
+                                    <h4 class="font-semibold text-blue-900 mb-2">Facebook</h4>
+                                    <ul class="text-sm">
+                                        <li>• Martedì-Giovedì: 9:00-10:00</li>
+                                        <li>• Mercoledì: 13:00-15:00</li>
+                                    </ul>
+                                </div>
+                                <div class="p-3 bg-pink-50 rounded-md">
+                                    <h4 class="font-semibold text-pink-900 mb-2">Instagram</h4>
+                                    <ul class="text-sm">
+                                        <li>• Lunedì-Venerdì: 11:00-13:00</li>
+                                        <li>• Mercoledì: 14:00-15:00</li>
+                                    </ul>
+                                </div>
+                                <div class="p-3 bg-blue-50 rounded-md">
+                                    <h4 class="font-semibold text-blue-900 mb-2">LinkedIn</h4>
+                                    <ul class="text-sm">
+                                        <li>• Martedì-Mercoledì: 8:00-10:00</li>
+                                        <li>• Martedì-Giovedì: 19:00-20:00</li>
+                                    </ul>
+                                </div>
+                                <div class="p-3 bg-sky-50 rounded-md">
+                                    <h4 class="font-semibold text-sky-900 mb-2">Twitter/X</h4>
+                                    <ul class="text-sm">
+                                        <li>• Lunedì-Venerdì: 9:00-10:00</li>
+                                        <li>• Mercoledì-Venerdì: 18:00-19:00</li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="faq-item">
+                    <button onclick="toggleFAQ('faq3')" class="w-full text-left p-4 bg-gray-50 rounded-lg hover:bg-gray-100 focus:outline-none">
+                        <div class="flex justify-between items-center">
+                            <h3 class="font-semibold text-gray-900">Come programmo i post in anticipo?</h3>
+                            <i id="faq3-icon" class="fas fa-chevron-down text-gray-400"></i>
+                        </div>
+                    </button>
+                    <div id="faq3" class="faq-content p-4">
+                        <div class="text-gray-600">
+                            <p class="mb-3">La programmazione ti permette di pianificare i contenuti:</p>
+                            <ol class="list-decimal list-inside space-y-2">
+                                <li>Nella Dashboard, clicca "Programma Post"</li>
+                                <li>Seleziona data e ora di pubblicazione</li>
+                                <li>Scegli un template predefinito o crea contenuto personalizzato</li>
+                                <li>Visualizza l'anteprima del contenuto</li>
+                                <li>Clicca "Programma Post"</li>
+                            </ol>
+                            <div class="mt-3 p-3 bg-green-50 rounded-md">
+                                <p class="text-green-700"><strong>Vantaggi:</strong> Mantieni presenza costante sui social anche quando non sei online!</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="faq-item">
+                    <button onclick="toggleFAQ('faq4')" class="w-full text-left p-4 bg-gray-50 rounded-lg hover:bg-gray-100 focus:outline-none">
+                        <div class="flex justify-between items-center">
+                            <h3 class="font-semibold text-gray-900">Cosa significano le metriche di analytics?</h3>
+                            <i id="faq4-icon" class="fas fa-chevron-down text-gray-400"></i>
+                        </div>
+                    </button>
+                    <div id="faq4" class="faq-content p-4">
+                        <div class="text-gray-600">
+                            <p class="mb-3">Le principali metriche da monitorare:</p>
+                            <div class="space-y-3">
+                                <div class="p-3 border-l-4 border-blue-500 bg-blue-50">
+                                    <h4 class="font-semibold text-blue-900">Engagement Rate</h4>
+                                    <p class="text-sm">Percentuale di interazioni (like, commenti, condivisioni) rispetto al reach. Un buon engagement rate è 2-5%.</p>
+                                </div>
+                                <div class="p-3 border-l-4 border-green-500 bg-green-50">
+                                    <h4 class="font-semibold text-green-900">Reach</h4>
+                                    <p class="text-sm">Numero di persone uniche che hanno visto il tuo contenuto. Indica la portata dei tuoi post.</p>
+                                </div>
+                                <div class="p-3 border-l-4 border-purple-500 bg-purple-50">
+                                    <h4 class="font-semibold text-purple-900">Impressions</h4>
+                                    <p class="text-sm">Numero totale di volte che il tuo contenuto è stato visualizzato (include visualizzazioni multiple della stessa persona).</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="faq-item">
+                    <button onclick="toggleFAQ('faq5')" class="w-full text-left p-4 bg-gray-50 rounded-lg hover:bg-gray-100 focus:outline-none">
+                        <div class="flex justify-between items-center">
+                            <h3 class="font-semibold text-gray-900">Quali formati di media sono supportati?</h3>
+                            <i id="faq5-icon" class="fas fa-chevron-down text-gray-400"></i>
+                        </div>
+                    </button>
+                    <div id="faq5" class="faq-content p-4">
+                        <div class="text-gray-600">
+                            <p class="mb-3">Formati supportati per i media:</p>
+                            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                                <div>
+                                    <h4 class="font-semibold text-gray-900 mb-2">📷 Immagini</h4>
+                                    <ul class="text-sm space-y-1">
+                                        <li>• JPG/JPEG (raccomandato)</li>
+                                        <li>• PNG (con trasparenza)</li>
+                                        <li>• GIF (animazioni)</li>
+                                        <li>• WebP</li>
+                                    </ul>
+                                </div>
+                                <div>
+                                    <h4 class="font-semibold text-gray-900 mb-2">🎥 Video</h4>
+                                    <ul class="text-sm space-y-1">
+                                        <li>• MP4 (raccomandato)</li>
+                                        <li>• MOV</li>
+                                        <li>• AVI</li>
+                                        <li>• Durata massima: 60 secondi</li>
+                                    </ul>
+                                </div>
+                            </div>
+                            <div class="mt-3 p-3 bg-yellow-50 rounded-md">
+                                <p class="text-yellow-700"><strong>Dimensioni consigliate:</strong> 1080x1080px per Instagram, 1200x630px per Facebook</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="faq-item">
+                    <button onclick="toggleFAQ('faq6')" class="w-full text-left p-4 bg-gray-50 rounded-lg hover:bg-gray-100 focus:outline-none">
+                        <div class="flex justify-between items-center">
+                            <h3 class="font-semibold text-gray-900">Come posso migliorare l'engagement dei miei post?</h3>
+                            <i id="faq6-icon" class="fas fa-chevron-down text-gray-400"></i>
+                        </div>
+                    </button>
+                    <div id="faq6" class="faq-content p-4">
+                        <div class="text-gray-600">
+                            <p class="mb-3">Strategie per aumentare l'engagement:</p>
+                            <div class="space-y-3">
+                                <div class="p-3 bg-gradient-to-r from-blue-50 to-purple-50 rounded-md">
+                                    <h4 class="font-semibold text-gray-900 mb-2">💭 Contenuto</h4>
+                                    <ul class="text-sm space-y-1">
+                                        <li>• Fai domande al tuo pubblico</li>
+                                        <li>• Condividi storie personali</li>
+                                        <li>• Usa call-to-action chiari</li>
+                                        <li>• Pubblica contenuto di valore</li>
+                                    </ul>
+                                </div>
+                                <div class="p-3 bg-gradient-to-r from-green-50 to-blue-50 rounded-md">
+                                    <h4 class="font-semibold text-gray-900 mb-2">⏰ Timing</h4>
+                                    <ul class="text-sm space-y-1">
+                                        <li>• Pubblica negli orari di maggiore attività</li>
+                                        <li>• Mantieni una frequenza costante</li>
+                                        <li>• Rispondi rapidamente ai commenti</li>
+                                    </ul>
+                                </div>
+                                <div class="p-3 bg-gradient-to-r from-yellow-50 to-orange-50 rounded-md">
+                                    <h4 class="font-semibold text-gray-900 mb-2">🎨 Visual</h4>
+                                    <ul class="text-sm space-y-1">
+                                        <li>• Usa immagini di alta qualità</li>
+                                        <li>• Mantieni uno stile coerente</li>
+                                        <li>• Sperimenta con video e GIF</li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Contact Section -->
+        <div class="mt-12 bg-gradient-to-r from-blue-600 to-purple-600 rounded-lg p-8 text-white text-center">
+            <h3 class="text-2xl font-bold mb-4">
+                <i class="fas fa-headset mr-2"></i>
+                Hai bisogno di ulteriore aiuto?
+            </h3>
+            <p class="mb-6 opacity-90">
+                Non hai trovato quello che cercavi? Consulta la documentazione completa o prova la demo interattiva.
+            </p>
+            <div class="space-x-4">
+                <a href="/docs" class="bg-white text-blue-600 px-6 py-3 rounded-lg hover:bg-gray-100 inline-block">
+                    <i class="fas fa-book mr-2"></i>Documentazione Completa
+                </a>
+                <a href="/dashboard" class="bg-transparent border-2 border-white text-white px-6 py-3 rounded-lg hover:bg-white hover:text-blue-600 inline-block">
+                    <i class="fas fa-play mr-2"></i>Prova la Demo
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function toggleFAQ(faqId) {
+            const content = document.getElementById(faqId);
+            const icon = document.getElementById(faqId + '-icon');
+            
+            if (content.classList.contains('open')) {
+                content.classList.remove('open');
+                icon.classList.remove('fa-chevron-up');
+                icon.classList.add('fa-chevron-down');
+            } else {
+                // Chiudi altre FAQ aperte
+                document.querySelectorAll('.faq-content.open').forEach(el => {
+                    el.classList.remove('open');
+                });
+                document.querySelectorAll('[id$="-icon"]').forEach(el => {
+                    el.classList.remove('fa-chevron-up');
+                    el.classList.add('fa-chevron-down');
+                });
+                
+                // Apri questa FAQ
+                content.classList.add('open');
+                icon.classList.remove('fa-chevron-down');
+                icon.classList.add('fa-chevron-up');
+            }
+        }
+
+        function searchFAQ() {
+            const searchTerm = document.getElementById('search-faq').value.toLowerCase();
+            const faqItems = document.querySelectorAll('.faq-item');
+            
+            faqItems.forEach(item => {
+                const text = item.textContent.toLowerCase();
+                if (text.includes(searchTerm)) {
+                    item.style.display = 'block';
+                } else {
+                    item.style.display = 'none';
+                }
+            });
+        }
+    </script>
+</body>
+</html>
