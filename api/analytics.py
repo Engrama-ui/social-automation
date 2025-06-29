@@ -1,3 +1,6 @@
+import sys
+sys.path.append('/Users/matteo/Library/Python/3.9/lib/python/site-packages')
+
 from fastapi import APIRouter, Depends, HTTPException
 from typing import Dict, List, Optional
 from pydantic import BaseModel, Field

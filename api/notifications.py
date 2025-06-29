@@ -136,7 +136,7 @@ async def websocket_endpoint(
                             "timestamp": "2024-01-15T12:00:00Z",
                             "read": True,
                             "priority": "low",
-                            "action_url": null
+                            "action_url": None
                         }
                     ]
                 }
@@ -210,3 +210,5 @@ async def mark_notification_read(
     if not manager.mark_as_read(notification_id):
         raise HTTPException(status_code=404, detail="❌ Notifica non trovata")
     return {"message": "✅ Notifica segnata come letta"}
+
+null = None

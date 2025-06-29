@@ -5,6 +5,8 @@ from pydantic import BaseModel, Field
 from services.scheduler import ContentScheduler
 from auth import get_current_user
 
+app = None
+
 router = APIRouter(
     prefix="/content", 
     tags=["📝 Gestione Contenuti"],
