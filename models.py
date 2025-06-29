@@ -97,11 +97,22 @@ class ContentTemplate(Base):
     # user_id = Column(Integer, ForeignKey("users.id"))
     # user = relationship("User")
 
+class MediaFile(Base):
+    __tablename__ = "media_files"
+
+    id = Column(Integer, primary_key=True, index=True)
+    user_id = Column(Integer, ForeignKey("users.id"))
+    filename = Column(String, nullable=False)
+    filepath = Column(String, nullable=False)
+    mime_type = Column(String, nullable=False)
+    created_at = Column(DateTime)
+    # user = relationship("User")  # opzionale, se vuoi la relazione
+
 # Aggiungi le relazioni mancanti
 User.accounts = relationship("SocialAccount", back_populates="user")
 SocialAccount.posts = relationship("ScheduledPost", back_populates="account")
 
 # Espone ContentTemplate per l'import nei servizi
 __all__ = [
-    'User', 'SocialAccount', 'ScheduledPost', 'Engagement', 'Hashtag', 'PostHashtag', 'Notification', 'SystemStatus', 'ContentTemplate'
+    'User', 'SocialAccount', 'ScheduledPost', 'Engagement', 'Hashtag', 'PostHashtag', 'Notification', 'SystemStatus', 'ContentTemplate', 'MediaFile'
 ]
