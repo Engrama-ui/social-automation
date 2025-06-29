@@ -100,3 +100,8 @@ class ContentTemplate(Base):
 # Aggiungi le relazioni mancanti
 User.accounts = relationship("SocialAccount", back_populates="user")
 SocialAccount.posts = relationship("ScheduledPost", back_populates="account")
+
+# Espone ContentTemplate per l'import nei servizi
+__all__ = [
+    'User', 'SocialAccount', 'ScheduledPost', 'Engagement', 'Hashtag', 'PostHashtag', 'Notification', 'SystemStatus', 'ContentTemplate'
+]
