@@ -209,19 +209,22 @@ async def disconnect_social_account(
     Scollega un account social dal profilo utente.
     Rimuove tutti i token di accesso associati.
     """
+    valid_platforms = ["facebook", "instagram", "twitter", "linkedin"]
+    if platform not in valid_platforms:
+        raise HTTPException(
+            status_code=400, 
+            detail=f"❌ Piattaforma non supportata. Supportate: {', '.join(valid_platforms)}"
+        )
+
     conn = get_db_connection()
     try:
-        result = conn.execute(
+        # Rimuove l'account dalla tabella
+        conn.execute(
             "DELETE FROM social_accounts WHERE user_id = ? AND platform = ?",
             (user["id"], platform)
         )
-        
-        if result.rowcount == 0:
-            raise HTTPException(status_code=404, detail=f"❌ Account {platform} non trovato")
-        
         conn.commit()
         return {"message": f"✅ Account {platform} scollegato con successo"}
-        
     except Exception as e:
         conn.rollback()
         raise HTTPException(status_code=400, detail=f"❌ Errore nella disconnessione: {str(e)}")

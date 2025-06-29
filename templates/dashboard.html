@@ -498,6 +498,27 @@
                 <!-- Populated by JavaScript -->
             </div>
         </div>
+
+        <!-- Manage Social Accounts Section -->
+        <div class="form-section">
+            <h2 class="text-xl font-bold text-gray-900 mb-4">Gestione Account Social</h2>
+            <p class="text-gray-600 mb-4">Collega o scollega i tuoi account social per iniziare a pubblicare contenuti.</p>
+            <div class="space-y-4">
+                <button onclick="connectPlatform('facebook')" class="bg-blue-600 text-white px-4 py-2 rounded-md hover:bg-blue-700">
+                    <i class="fab fa-facebook mr-2"></i>Collega Facebook
+                </button>
+                <button onclick="disconnectPlatform('facebook')" class="bg-red-600 text-white px-4 py-2 rounded-md hover:bg-red-700">
+                    <i class="fab fa-facebook mr-2"></i>Scollega Facebook
+                </button>
+                <button onclick="connectPlatform('instagram')" class="bg-pink-600 text-white px-4 py-2 rounded-md hover:bg-pink-700">
+                    <i class="fab fa-instagram mr-2"></i>Collega Instagram
+                </button>
+                <button onclick="disconnectPlatform('instagram')" class="bg-red-600 text-white px-4 py-2 rounded-md hover:bg-red-700">
+                    <i class="fab fa-instagram mr-2"></i>Scollega Instagram
+                </button>
+                <!-- Add buttons for other platforms similarly -->
+            </div>
+        </div>
     </div>
 
     <script>
