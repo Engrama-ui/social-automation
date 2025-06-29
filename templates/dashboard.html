@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Engagement Dashboard</title>
+    <link href="https://cdn.jsdelivr.net/npm/chart.js@3.7.1/dist/chart.min.css" rel="stylesheet">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 20px;
+            background-color: #f5f5f5;
+        }
+        .dashboard {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+        }
+        .card {
+            background: white;
+            border-radius: 8px;
+            padding: 20px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        .card-header {
+            font-size: 18px;
+            font-weight: bold;
+            margin-bottom: 15px;
+            color: #333;
+        }
+        .metric {
+            font-size: 24px;
+            font-weight: bold;
+            color: #4CAF50;
+        }
+        .notification {
+            padding: 10px;
+            margin-bottom: 10px;
+            border-left: 4px solid #4CAF50;
+            background-color: #f9f9f9;
+        }
+        .notification.warning {
+            border-left-color: #FFC107;
+        }
+        .notification.alert {
+            border-left-color: #F44336;
+        }
+    </style>
+</head>
+<body>
+    <h1>Engagement Dashboard</h1>
+    <div class="dashboard">
+        <div class="card">
+            <div class="card-header">Engagement Summary</div>
+            <div id="summary-metrics">
+                <!-- Will be populated by JavaScript -->
+            </div>
+        </div>
+        
+        <div class="card">
+            <div class="card-header">Recent Activity</div>
+            <div id="recent-activity">
+                <!-- Will be populated by JavaScript -->
+            </div>
+        </div>
+        
+        <div class="card">
+            <div class="card-header">Sentiment Analysis</div>
+            <canvas id="sentiment-chart"></canvas>
+        </div>
+        
+        <div class="card">
+            <div class="card-header">Notifications</div>
+            <div id="notifications">
+                <!-- Will be populated by JavaScript -->
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@3.7.1/dist/chart.min.js"></script>
+    <script>
+        // Fetch engagement data from API
+        async function loadDashboard() {
+            try {
+                const response = await fetch('/api/engagement/account/1/summary');
+                const summary = await response.json();
+                
+                // Display summary metrics
+                document.getElementById('summary-metrics').innerHTML = `
+                    <div>Total Likes: <span class="metric">${summary.total_likes}</span></div>
+                    <div>Total Comments: <span class="metric">${summary.total_comments}</span></div>
+                    <div>Total Shares: <span class="metric">${summary.total_shares}</span></div>
+                    <div>Average Sentiment: <span class="metric">${summary.average_sentiment.toFixed(2)}</span></div>
+                `;
+                
+                // Load recent activity
+                const activityResponse = await fetch('/api/engagement/account/1/recent?limit=5');
+                const activities = await activityResponse.json();
+                
+                let activityHTML = '';
+                activities.forEach(activity => {
+                    activityHTML += `
+                        <div class="notification">
+                            Post ${activity.post_id}: 
+                            ${activity.likes} likes, 
+                            ${activity.comments} comments,
+                            Sentiment: ${activity.sentiment_score.toFixed(2)}
+                        </div>
+                    `;
+                });
+                document.getElementById('recent-activity').innerHTML = activityHTML;
+                
+                // Setup sentiment chart
+                const ctx = document.getElementById('sentiment-chart').getContext('2d');
+                new Chart(ctx, {
+                    type: 'line',
+                    data: {
+                        labels: activities.map(a => `Post ${a.post_id}`),
+                        datasets: [{
+                            label: 'Sentiment Score',
+                            data: activities.map(a => a.sentiment_score),
+                            borderColor: 'rgb(75, 192, 192)',
+                            tension: 0.1
+                        }]
+                    }
+                });
+                
+                // Setup WebSocket for real-time notifications
+                const ws = new WebSocket(`ws://${window.location.host}/api/notifications/ws?token=YOUR_TOKEN`);
+                
+                ws.onmessage = (event) => {
+                    const notificationsDiv = document.getElementById('notifications');
+                    notificationsDiv.innerHTML = `
+                        <div class="notification">${event.data}</div>
+                        ${notificationsDiv.innerHTML}
+                    `;
+                };
+                
+            } catch (error) {
+                console.error('Error loading dashboard:', error);
+            }
+        }
+        
+        // Load dashboard when page loads
+        window.addEventListener('load', loadDashboard);
+    </script>
+</body>
+</html>
