@@ -1,7 +1,7 @@
 import os
 from typing import List, Optional
 from datetime import datetime
-from database import db
+from database import SessionLocal
 from models import MediaFile
 from config import settings
 

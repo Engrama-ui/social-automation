@@ -1,6 +1,6 @@
 import os
-from typing import Dict, Optional
-from database import db
+from typing import Dict, Optional, List
+from database import SessionLocal
 from models import SocialAccount
 from config import settings
 

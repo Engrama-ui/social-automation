@@ -1,4 +1,5 @@
 from fastapi import FastAPI
+from fastapi.responses import HTMLResponse
 from fastapi.middleware.cors import CORSMiddleware
 from database import Base, engine
 import api.content
@@ -35,7 +36,7 @@ app.include_router(api.analytics.router)
 app.include_router(api.platforms.router)
 app.include_router(api.dashboard.router)
 
-@app.get("/")
+@app.get("/", response_class=HTMLResponse)
 async def root():
     return {"message": "Social Media Automation System is running!"}
 

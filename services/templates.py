@@ -1,4 +1,4 @@
-from typing import Dict, Optional
+from typing import Dict, Optional, List, List
 from database import SessionLocal
 from models import ContentTemplate
 

@@ -67,6 +67,22 @@ class PostHashtag(Base):
     post = relationship("ScheduledPost", back_populates="hashtags")
     hashtag = relationship("Hashtag", back_populates="posts")
 
+class ContentTemplate(Base):
+    __tablename__ = "content_templates"
+    id = Column(Integer, primary_key=True, index=True)
+    name = Column(String)
+    content = Column(String)
+    variables = Column(JSON)
+
+class MediaFile(Base):
+    __tablename__ = "media_files"
+    id = Column(Integer, primary_key=True, index=True)
+    user_id = Column(Integer, ForeignKey("users.id"))
+    filename = Column(String)
+    filepath = Column(String)
+    mime_type = Column(String)
+    created_at = Column(DateTime)
+
 class Notification(Base):
     __tablename__ = "notifications"
     

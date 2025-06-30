@@ -1,6 +1,6 @@
 from datetime import datetime
 from typing import List, Optional
-from database import db
+from database import SessionLocal
 from models import Engagement, SocialAccount
 from textblob import TextBlob
 
