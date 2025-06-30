@@ -102,6 +102,50 @@ class SystemStatus(Base):
     cpu_usage = Column(Float)
     memory_usage = Column(Float)
 
-# Aggiungi le relazioni mancanti
+class ContentTemplate(Base):
+    __tablename__ = "content_templates"
+
+    id = Column(Integer, primary_key=True, index=True)
+    name = Column(String, nullable=False)
+    content = Column(String, nullable=False)
+    variables = Column(JSON, default={})
+    # Se vuoi collegare il template a un utente, decommenta la riga seguente:
+    # user_id = Column(Integer, ForeignKey("users.id"))
+    # user = relationship("User")
+
+class MediaFile(Base):
+    __tablename__ = "media_files"
+
+    id = Column(Integer, primary_key=True, index=True)
+    user_id = Column(Integer, ForeignKey("users.id"))
+    filename = Column(String, nullable=False)
+    filepath = Column(String, nullable=False)
+    mime_type = Column(String, nullable=False)
+    created_at = Column(DateTime)
+    # user = relationship("User")  # opzionale, se vuoi la relazione
+
+class UserPreferences(Base):
+    __tablename__ = "user_preferences"
+    
+    id = Column(Integer, primary_key=True, index=True)
+    user_id = Column(Integer, ForeignKey("users.id"), unique=True)
+    timezone = Column(String, default="Europe/Rome")
+    language = Column(String, default="it")
+    email_notifications = Column(Boolean, default=True)
+    engagement_alerts = Column(Boolean, default=True)
+    weekly_reports = Column(Boolean, default=False)
+    optimization_tips = Column(Boolean, default=False)
+    created_at = Column(DateTime)
+    updated_at = Column(DateTime)
+    
+    user = relationship("User", back_populates="preferences")
+
+# Add relationships
 User.accounts = relationship("SocialAccount", back_populates="user")
+User.preferences = relationship("UserPreferences", back_populates="user", uselist=False)
 SocialAccount.posts = relationship("ScheduledPost", back_populates="account")
+
+# Espone ContentTemplate per l'import nei servizi
+__all__ = [
+    'User', 'SocialAccount', 'ScheduledPost', 'Engagement', 'Hashtag', 'PostHashtag', 'Notification', 'SystemStatus', 'ContentTemplate', 'MediaFile'
+]

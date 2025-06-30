@@ -1,0 +1,4 @@
+```
+# Ignora il file .env che contiene le credenziali sensibili
+.env
+```

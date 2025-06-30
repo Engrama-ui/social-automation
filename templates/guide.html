@@ -1,0 +1,309 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Guida Rapida - Social Media Automation</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <style>
+        .step-card {
+            transition: all 0.3s ease;
+        }
+        .step-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 10px 25px rgba(0,0,0,0.15);
+        }
+        .step-number {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        }
+    </style>
+</head>
+<body class="bg-gradient-to-br from-blue-50 to-indigo-100 min-h-screen">
+    <!-- Navigation -->
+    <nav class="bg-white shadow-lg">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between h-16">
+                <div class="flex items-center">
+                    <a href="/" class="flex items-center">
+                        <i class="fas fa-robot text-2xl text-blue-600 mr-3"></i>
+                        <h1 class="text-xl font-bold text-gray-800">Guida Rapida</h1>
+                    </a>
+                </div>
+                <div class="flex items-center space-x-4">
+                    <a href="/dashboard" class="bg-blue-600 text-white px-4 py-2 rounded-md hover:bg-blue-700">Dashboard</a>
+                    <a href="/" class="text-gray-600 hover:text-gray-800">Home</a>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+        <!-- Header -->
+        <div class="text-center mb-12">
+            <h1 class="text-4xl font-bold text-gray-900 mb-4">
+                🚀 Benvenuto nel tuo Sistema di Automazione Social
+            </h1>
+            <p class="text-xl text-gray-600 mb-8">
+                Segui questa guida passo-passo per iniziare a automatizzare i tuoi social media in pochi minuti
+            </p>
+            <div class="bg-blue-100 border-l-4 border-blue-500 p-4 rounded-md inline-block">
+                <div class="flex">
+                    <i class="fas fa-info-circle text-blue-500 mt-1 mr-3"></i>
+                    <div>
+                        <p class="text-blue-700">
+                            <strong>Tempo stimato:</strong> 10-15 minuti per completare la configurazione iniziale
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Steps -->
+        <div class="space-y-8">
+            <!-- Step 1 -->
+            <div class="step-card bg-white rounded-lg shadow-md p-6">
+                <div class="flex items-start">
+                    <div class="step-number text-white w-12 h-12 rounded-full flex items-center justify-center text-xl font-bold mr-4">
+                        1
+                    </div>
+                    <div class="flex-1">
+                        <h3 class="text-xl font-semibold text-gray-900 mb-3">
+                            <i class="fas fa-user-plus text-blue-600 mr-2"></i>
+                            Configura il tuo Profilo
+                        </h3>
+                        <p class="text-gray-600 mb-4">
+                            Prima di iniziare, assicurati di avere le tue credenziali dei social media pronte.
+                        </p>
+                        <div class="bg-gray-50 p-4 rounded-md mb-4">
+                            <h4 class="font-medium text-gray-900 mb-2">📋 Cosa ti serve:</h4>
+                            <ul class="space-y-1 text-sm text-gray-600">
+                                <li>✓ Account Facebook Business (se vuoi pubblicare su Facebook)</li>
+                                <li>✓ Account Instagram Business (collegato a Facebook)</li>
+                                <li>✓ Account LinkedIn (per pubblicazioni professionali)</li>
+                                <li>✓ Account Twitter/X (per microblogging)</li>
+                            </ul>
+                        </div>
+                        <button onclick="showAccountSetup()" class="bg-blue-600 text-white px-4 py-2 rounded-md hover:bg-blue-700">
+                            <i class="fas fa-cog mr-2"></i>Configura Account
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Step 2 -->
+            <div class="step-card bg-white rounded-lg shadow-md p-6">
+                <div class="flex items-start">
+                    <div class="step-number text-white w-12 h-12 rounded-full flex items-center justify-center text-xl font-bold mr-4">
+                        2
+                    </div>
+                    <div class="flex-1">
+                        <h3 class="text-xl font-semibold text-gray-900 mb-3">
+                            <i class="fas fa-edit text-green-600 mr-2"></i>
+                            Crea il tuo Primo Post
+                        </h3>
+                        <p class="text-gray-600 mb-4">
+                            Inizia con un post semplice per familiarizzare con l'interfaccia.
+                        </p>
+                        <div class="bg-green-50 p-4 rounded-md mb-4">
+                            <h4 class="font-medium text-gray-900 mb-2">💡 Suggerimenti per il primo post:</h4>
+                            <ul class="space-y-1 text-sm text-gray-600">
+                                <li>• Scrivi un breve messaggio di presentazione</li>
+                                <li>• Usa 1-2 hashtag rilevanti per il tuo settore</li>
+                                <li>• Aggiungi un'immagine se ne hai una disponibile</li>
+                                <li>• Inizia con una sola piattaforma per testare</li>
+                            </ul>
+                        </div>
+                        <a href="/dashboard" onclick="showCreatePost()" class="bg-green-600 text-white px-4 py-2 rounded-md hover:bg-green-700 inline-block">
+                            <i class="fas fa-plus mr-2"></i>Crea Primo Post
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Step 3 -->
+            <div class="step-card bg-white rounded-lg shadow-md p-6">
+                <div class="flex items-start">
+                    <div class="step-number text-white w-12 h-12 rounded-full flex items-center justify-center text-xl font-bold mr-4">
+                        3
+                    </div>
+                    <div class="flex-1">
+                        <h3 class="text-xl font-semibold text-gray-900 mb-3">
+                            <i class="fas fa-calendar text-purple-600 mr-2"></i>
+                            Programma Contenuti Futuri
+                        </h3>
+                        <p class="text-gray-600 mb-4">
+                            Usa la funzione di programmazione per pianificare i tuoi post in anticipo.
+                        </p>
+                        <div class="bg-purple-50 p-4 rounded-md mb-4">
+                            <h4 class="font-medium text-gray-900 mb-2">⏰ Orari ottimali per pubblicare:</h4>
+                            <div class="grid grid-cols-1 md:grid-cols-2 gap-4 text-sm text-gray-600">
+                                <div>
+                                    <strong>Facebook:</strong>
+                                    <ul class="ml-4">
+                                        <li>• Martedì-Giovedì: 9:00-10:00</li>
+                                        <li>• Mercoledì: 13:00-15:00</li>
+                                    </ul>
+                                </div>
+                                <div>
+                                    <strong>Instagram:</strong>
+                                    <ul class="ml-4">
+                                        <li>• Lunedì-Venerdì: 11:00-13:00</li>
+                                        <li>• Mercoledì: 14:00-15:00</li>
+                                    </ul>
+                                </div>
+                                <div>
+                                    <strong>LinkedIn:</strong>
+                                    <ul class="ml-4">
+                                        <li>• Martedì-Mercoledì: 8:00-10:00</li>
+                                        <li>• Martedì-Giovedì: 19:00-20:00</li>
+                                    </ul>
+                                </div>
+                                <div>
+                                    <strong>Twitter/X:</strong>
+                                    <ul class="ml-4">
+                                        <li>• Lunedì-Venerdì: 9:00-10:00</li>
+                                        <li>• Mercoledì-Venerdì: 18:00-19:00</li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                        <a href="/dashboard" onclick="showSchedulePost()" class="bg-purple-600 text-white px-4 py-2 rounded-md hover:bg-purple-700 inline-block">
+                            <i class="fas fa-clock mr-2"></i>Programma Post
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Step 4 -->
+            <div class="step-card bg-white rounded-lg shadow-md p-6">
+                <div class="flex items-start">
+                    <div class="step-number text-white w-12 h-12 rounded-full flex items-center justify-center text-xl font-bold mr-4">
+                        4
+                    </div>
+                    <div class="flex-1">
+                        <h3 class="text-xl font-semibold text-gray-900 mb-3">
+                            <i class="fas fa-chart-bar text-orange-600 mr-2"></i>
+                            Monitora le Performance
+                        </h3>
+                        <p class="text-gray-600 mb-4">
+                            Tieni traccia dell'engagement e ottimizza la tua strategia.
+                        </p>
+                        <div class="bg-orange-50 p-4 rounded-md mb-4">
+                            <h4 class="font-medium text-gray-900 mb-2">📊 Metriche principali da monitorare:</h4>
+                            <ul class="space-y-1 text-sm text-gray-600">
+                                <li>• <strong>Engagement Rate:</strong> Like, commenti e condivisioni</li>
+                                <li>• <strong>Reach:</strong> Quante persone hanno visto i tuoi post</li>
+                                <li>• <strong>Follower Growth:</strong> Crescita dei tuoi seguaci</li>
+                                <li>• <strong>Best Performing Content:</strong> Contenuti con più successo</li>
+                            </ul>
+                        </div>
+                        <a href="/dashboard" onclick="showAnalytics()" class="bg-orange-600 text-white px-4 py-2 rounded-md hover:bg-orange-700 inline-block">
+                            <i class="fas fa-chart-line mr-2"></i>Visualizza Analytics
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Tips Section -->
+        <div class="mt-12 bg-gradient-to-r from-blue-600 to-purple-600 rounded-lg p-8 text-white">
+            <h3 class="text-2xl font-bold mb-4">
+                <i class="fas fa-lightbulb mr-2"></i>
+                Suggerimenti per il Successo
+            </h3>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <div>
+                    <h4 class="font-semibold mb-2">📝 Creazione Contenuti</h4>
+                    <ul class="space-y-1 text-sm opacity-90">
+                        <li>• Mantieni un tone of voice coerente</li>
+                        <li>• Usa sempre immagini di qualità</li>
+                        <li>• Interagisci con i tuoi follower</li>
+                        <li>• Varia i tipi di contenuto</li>
+                    </ul>
+                </div>
+                <div>
+                    <h4 class="font-semibold mb-2">📈 Crescita</h4>
+                    <ul class="space-y-1 text-sm opacity-90">
+                        <li>• Pubblica con regolarità</li>
+                        <li>• Usa hashtag rilevanti</li>
+                        <li>• Analizza i dati regolarmente</li>
+                        <li>• Sperimenta con nuovi formati</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <!-- CTA Section -->
+        <div class="text-center mt-12">
+            <h3 class="text-2xl font-bold text-gray-900 mb-4">Pronto a Iniziare?</h3>
+            <p class="text-gray-600 mb-6">
+                Hai tutte le informazioni necessarie per iniziare la tua automazione social media
+            </p>
+            <div class="space-x-4">
+                <a href="/dashboard" class="bg-blue-600 text-white px-8 py-3 rounded-lg hover:bg-blue-700 inline-block">
+                    <i class="fas fa-rocket mr-2"></i>Vai alla Dashboard
+                </a>
+                <a href="/docs" class="bg-gray-600 text-white px-8 py-3 rounded-lg hover:bg-gray-700 inline-block">
+                    <i class="fas fa-book mr-2"></i>Documentazione API
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Funzioni per reindirizzare alla dashboard con sezioni specifiche
+        function showCreatePost() {
+            localStorage.setItem('dashboardAction', 'create-post');
+        }
+
+        function showSchedulePost() {
+            localStorage.setItem('dashboardAction', 'schedule-post');
+        }
+
+        function showAnalytics() {
+            localStorage.setItem('dashboardAction', 'analytics');
+        }
+
+        function showAccountSetup() {
+            // Call the backend API to load the account setup section
+            loadAccountProfile();
+        }
+
+        window.fbAsyncInit = function() {
+          FB.init({
+            appId      : '717748311231080', // ID dell'app fornito
+            cookie     : true,
+            xfbml      : true,
+            version    : 'v12.0' // Versione API
+          });
+          FB.AppEvents.logPageView();
+        };
+
+        (function(d, s, id){
+           var js, fjs = d.getElementsByTagName(s)[0];
+           if (d.getElementById(id)) {return;}
+           js = d.createElement(s); js.id = id;
+           js.src = "https://connect.facebook.net/en_US/sdk.js";
+           fjs.parentNode.insertBefore(js, fjs);
+         }(document, 'script', 'facebook-jssdk'));
+
+         function statusChangeCallback(response) {
+          if (response.status === 'connected') {
+            console.log('Utente connesso:', response.authResponse);
+            window.location.href = '/dashboard';
+          } else if (response.status === 'not_authorized') {
+            console.log('Utente non autorizzato.');
+            document.getElementById('login-button').style.display = 'block';
+          } else {
+            console.log('Utente non connesso a Facebook.');
+            document.getElementById('login-button').style.display = 'block';
+          }
+        }
+
+        FB.getLoginStatus(function(response) {
+          statusChangeCallback(response);
+        });
+    </script>
+</body>
+</html>

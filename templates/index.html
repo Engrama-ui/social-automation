@@ -3,88 +3,271 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Automazione Social</title>
+    <title>Social Media Automation System</title>
     <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
 </head>
-<body class="bg-gray-100">
-    <div class="container mx-auto px-4 py-8">
-        <h1 class="text-3xl font-bold mb-8">Automazione Social</h1>
-        
-        <!-- Sezione Login -->
-        <div id="login-section" class="bg-white p-6 rounded-lg shadow-md mb-8">
-            <h2 class="text-xl font-semibold mb-4">Accedi</h2>
-            <form id="login-form">
-                <div class="mb-4">
-                    <label class="block text-gray-700 mb-2" for="username">Username</label>
-                    <input type="text" id="username" class="w-full px-3 py-2 border rounded-lg">
+<body class="bg-gradient-to-br from-blue-50 to-indigo-100 min-h-screen">
+    <!-- Header -->
+    <nav class="bg-white shadow-lg">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between h-16">
+                <div class="flex items-center">
+                    <i class="fas fa-robot text-2xl text-blue-600 mr-3"></i>
+                    <h1 class="text-xl font-bold text-gray-800">Social Media Automation</h1>
                 </div>
-                <div class="mb-4">
-                    <label class="block text-gray-700 mb-2" for="password">Password</label>
-                    <input type="password" id="password" class="w-full px-3 py-2 border rounded-lg">
+                <div class="flex items-center space-x-4">
+                    <a href="/guide" class="bg-green-600 text-white px-4 py-2 rounded-md hover:bg-green-700 transition duration-200">
+                        <i class="fas fa-compass mr-2"></i>Guida Rapida
+                    </a>
+                    <a href="/dashboard" class="bg-blue-600 text-white px-4 py-2 rounded-md hover:bg-blue-700 transition duration-200">
+                        <i class="fas fa-tachometer-alt mr-2"></i>Dashboard
+                    </a>
+                    <a href="/help" class="text-orange-600 hover:text-orange-800 font-medium">
+                        <i class="fas fa-question-circle mr-1"></i>Aiuto
+                    </a>
+                    <a href="/docs" class="text-blue-600 hover:text-blue-800 font-medium">API Docs</a>
+                    <a href="/health" class="text-green-600 hover:text-green-800 font-medium">Health Check</a>
                 </div>
-                <button type="submit" class="bg-blue-500 text-white px-4 py-2 rounded-lg hover:bg-blue-600">Accedi</button>
-            </form>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+        <div class="text-center">
+            <h2 class="text-4xl font-extrabold text-gray-900 sm:text-5xl">
+                Benvenuto nel tuo
+                <span class="text-blue-600">Sistema di Automazione</span>
+            </h2>
+            <p class="mt-4 text-xl text-gray-600 max-w-3xl mx-auto">
+                Gestisci i tuoi social media in modo intelligente e automatico. 
+                Programma contenuti, monitora l'engagement e analizza le performance.
+            </p>
         </div>
 
-        <!-- Dashboard -->
-        <div id="dashboard" class="hidden">
-            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                <!-- Card Programmazione Contenuti -->
-                <div class="bg-white p-6 rounded-lg shadow-md">
-                    <h3 class="text-lg font-semibold mb-4">Programmazione Contenuti</h3>
-                    <button onclick="openScheduler()" class="bg-green-500 text-white px-4 py-2 rounded-lg hover:bg-green-600">Nuovo Post</button>
+        <!-- Status Cards -->
+        <div class="mt-12 grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-4">
+            <div class="bg-white overflow-hidden shadow rounded-lg">
+                <div class="p-5">
+                    <div class="flex items-center">
+                        <div class="flex-shrink-0">
+                            <i class="fas fa-check-circle text-green-500 text-2xl"></i>
+                        </div>
+                        <div class="ml-5 w-0 flex-1">
+                            <dl>
+                                <dt class="text-sm font-medium text-gray-500 truncate">Sistema</dt>
+                                <dd class="text-lg font-medium text-gray-900">Online</dd>
+                            </dl>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="bg-white overflow-hidden shadow rounded-lg">
+                <div class="p-5">
+                    <div class="flex items-center">
+                        <div class="flex-shrink-0">
+                            <i class="fas fa-database text-blue-500 text-2xl"></i>
+                        </div>
+                        <div class="ml-5 w-0 flex-1">
+                            <dl>
+                                <dt class="text-sm font-medium text-gray-500 truncate">Database</dt>
+                                <dd class="text-lg font-medium text-gray-900">Connesso</dd>
+                            </dl>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="bg-white overflow-hidden shadow rounded-lg">
+                <div class="p-5">
+                    <div class="flex items-center">
+                        <div class="flex-shrink-0">
+                            <i class="fas fa-share-alt text-purple-500 text-2xl"></i>
+                        </div>
+                        <div class="ml-5 w-0 flex-1">
+                            <dl>
+                                <dt class="text-sm font-medium text-gray-500 truncate">API</dt>
+                                <dd class="text-lg font-medium text-gray-900">Attiva</dd>
+                            </dl>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="bg-white overflow-hidden shadow rounded-lg">
+                <div class="p-5">
+                    <div class="flex items-center">
+                        <div class="flex-shrink-0">
+                            <i class="fas fa-clock text-orange-500 text-2xl"></i>
+                        </div>
+                        <div class="ml-5 w-0 flex-1">
+                            <dl>
+                                <dt class="text-sm font-medium text-gray-500 truncate">Scheduler</dt>
+                                <dd class="text-lg font-medium text-gray-900">Pronto</dd>
+                            </dl>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Features Section -->
+        <div class="mt-16">
+            <h3 class="text-2xl font-bold text-gray-900 text-center mb-8">Funzionalità Principali</h3>
+            <div class="grid grid-cols-1 gap-8 sm:grid-cols-2 lg:grid-cols-3">
+                <div class="bg-white p-6 rounded-lg shadow-md hover:shadow-lg transition-shadow">
+                    <div class="flex items-center mb-4">
+                        <i class="fas fa-calendar-alt text-blue-600 text-2xl mr-3"></i>
+                        <h4 class="text-lg font-semibold">Programmazione Contenuti</h4>
+                    </div>
+                    <p class="text-gray-600">Programma i tuoi post sui social media con anticipo e automatizza la pubblicazione.</p>
+                    <a href="/docs#/content" class="inline-block mt-4 text-blue-600 hover:text-blue-800 font-medium">Scopri di più →</a>
                 </div>
 
-                <!-- Card Monitoraggio -->
-                <div class="bg-white p-6 rounded-lg shadow-md">
-                    <h3 class="text-lg font-semibold mb-4">Monitoraggio</h3>
-                    <button onclick="openMonitoring()" class="bg-purple-500 text-white px-4 py-2 rounded-lg hover:bg-purple-600">Visualizza Dati</button>
+                <div class="bg-white p-6 rounded-lg shadow-md hover:shadow-lg transition-shadow">
+                    <div class="flex items-center mb-4">
+                        <i class="fas fa-chart-bar text-green-600 text-2xl mr-3"></i>
+                        <h4 class="text-lg font-semibold">Analytics</h4>
+                    </div>
+                    <p class="text-gray-600">Monitora le performance dei tuoi contenuti e ottimizza la strategia social.</p>
+                    <a href="/docs#/analytics" class="inline-block mt-4 text-green-600 hover:text-green-800 font-medium">Scopri di più →</a>
                 </div>
 
-                <!-- Card Analisi -->
-                <div class="bg-white p-6 rounded-lg shadow-md">
-                    <h3 class="text-lg font-semibold mb-4">Analisi</h3>
-                    <button onclick="openAnalytics()" class="bg-yellow-500 text-white px-4 py-2 rounded-lg hover:bg-yellow-600">Genera Report</button>
+                <div class="bg-white p-6 rounded-lg shadow-md hover:shadow-lg transition-shadow">
+                    <div class="flex items-center mb-4">
+                        <i class="fas fa-heart text-red-600 text-2xl mr-3"></i>
+                        <h4 class="text-lg font-semibold">Engagement</h4>
+                    </div>
+                    <p class="text-gray-600">Traccia likes, commenti e condivisioni per misurare l'engagement del pubblico.</p>
+                    <a href="/docs#/engagement" class="inline-block mt-4 text-red-600 hover:text-red-800 font-medium">Scopri di più →</a>
                 </div>
+
+                <div class="bg-white p-6 rounded-lg shadow-md hover:shadow-lg transition-shadow">
+                    <div class="flex items-center mb-4">
+                        <i class="fas fa-hashtag text-purple-600 text-2xl mr-3"></i>
+                        <h4 class="text-lg font-semibold">Hashtag Manager</h4>
+                    </div>
+                    <p class="text-gray-600">Gestisci e ottimizza gli hashtag per massimizzare la visibilità dei tuoi post.</p>
+                    <a href="/docs#/hashtags" class="inline-block mt-4 text-purple-600 hover:text-purple-800 font-medium">Scopri di più →</a>
+                </div>
+
+                <div class="bg-white p-6 rounded-lg shadow-md hover:shadow-lg transition-shadow">
+                    <div class="flex items-center mb-4">
+                        <i class="fas fa-file-alt text-yellow-600 text-2xl mr-3"></i>
+                        <h4 class="text-lg font-semibold">Template Manager</h4>
+                    </div>
+                    <p class="text-gray-600">Crea e riutilizza template per velocizzare la creazione di contenuti.</p>
+                    <a href="/docs#/templates" class="inline-block mt-4 text-yellow-600 hover:text-yellow-800 font-medium">Scopri di più →</a>
+                </div>
+
+                <div class="bg-white p-6 rounded-lg shadow-md hover:shadow-lg transition-shadow">
+                    <div class="flex items-center mb-4">
+                        <i class="fas fa-images text-indigo-600 text-2xl mr-3"></i>
+                        <h4 class="text-lg font-semibold">Media Manager</h4>
+                    </div>
+                    <p class="text-gray-600">Carica e gestisci immagini e video per i tuoi contenuti social.</p>
+                    <a href="/docs#/media" class="inline-block mt-4 text-indigo-600 hover:text-indigo-800 font-medium">Scopri di più →</a>
+                </div>
+            </div>
+        </div>
+
+        <!-- Quick Actions -->
+        <div class="mt-16 bg-white rounded-lg shadow-md p-8">
+            <h3 class="text-2xl font-bold text-gray-900 text-center mb-8">Inizia Subito</h3>
+            <div class="flex flex-col sm:flex-row gap-4 justify-center">
+                <a href="/docs" class="bg-blue-600 text-white px-6 py-3 rounded-lg hover:bg-blue-700 text-center font-medium transition-colors">
+                    <i class="fas fa-book mr-2"></i>
+                    Esplora le API
+                </a>
+                <a href="/dashboard" class="bg-indigo-600 text-white px-6 py-3 rounded-lg hover:bg-indigo-700 text-center font-medium transition-colors">
+                    <i class="fas fa-chart-dashboard mr-2"></i>
+                    Dashboard
+                </a>
+                <a href="/health" class="bg-green-600 text-white px-6 py-3 rounded-lg hover:bg-green-700 text-center font-medium transition-colors">
+                    <i class="fas fa-heartbeat mr-2"></i>
+                    Verifica Sistema
+                </a>
+                <button onclick="testAPI()" class="bg-purple-600 text-white px-6 py-3 rounded-lg hover:bg-purple-700 font-medium transition-colors">
+                    <i class="fas fa-play mr-2"></i>
+                    Test API
+                </button>
             </div>
         </div>
     </div>
 
+    <!-- Footer -->
+    <footer class="bg-white border-t mt-16">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+            <div class="text-center text-gray-600">
+                <p>&copy; 2025 Social Media Automation System. Sviluppato con FastAPI e Python.</p>
+                <p class="mt-2">Sistema attivo e operativo su Render Cloud Platform.</p>
+            </div>
+        </div>
+    </footer>
+
     <script>
-        // Gestione Login
-        document.getElementById('login-form').addEventListener('submit', async (e) => {
-            e.preventDefault();
-            const username = document.getElementById('username').value;
-            const password = document.getElementById('password').value;
-
-            const response = await fetch('/api/auth/login', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify({ username, password })
-            });
-
-            if (response.ok) {
-                document.getElementById('login-section').classList.add('hidden');
-                document.getElementById('dashboard').classList.remove('hidden');
-            } else {
-                alert('Accesso fallito');
+        async function testAPI() {
+            try {
+                const response = await fetch('/health');
+                const data = await response.json();
+                alert('API Test: ' + JSON.stringify(data, null, 2));
+            } catch (error) {
+                alert('Errore nel test API: ' + error.message);
             }
+        }
+
+        // Animazione di caricamento
+        document.addEventListener('DOMContentLoaded', function() {
+            const cards = document.querySelectorAll('.shadow-md');
+            cards.forEach((card, index) => {
+                setTimeout(() => {
+                    card.style.opacity = '0';
+                    card.style.transform = 'translateY(20px)';
+                    card.style.transition = 'all 0.5s ease';
+                    setTimeout(() => {
+                        card.style.opacity = '1';
+                        card.style.transform = 'translateY(0)';
+                    }, 100);
+                }, index * 100);
+            });
         });
 
-        // Funzioni di navigazione
-        function openScheduler() {
-            window.location.href = '/scheduler';
+        window.fbAsyncInit = function() {
+          FB.init({
+            appId      : '717748311231080', // ID dell'app fornito
+            cookie     : true,
+            xfbml      : true,
+            version    : 'v12.0' // Versione API
+          });
+          FB.AppEvents.logPageView();
+        };
+
+        (function(d, s, id){
+           var js, fjs = d.getElementsByTagName(s)[0];
+           if (d.getElementById(id)) {return;}
+           js = d.createElement(s); js.id = id;
+           js.src = "https://connect.facebook.net/en_US/sdk.js";
+           fjs.parentNode.insertBefore(js, fjs);
+         }(document, 'script', 'facebook-jssdk'));
+
+         function statusChangeCallback(response) {
+          if (response.status === 'connected') {
+            console.log('Utente connesso:', response.authResponse);
+            window.location.href = '/dashboard';
+          } else if (response.status === 'not_authorized') {
+            console.log('Utente non autorizzato.');
+            document.getElementById('login-button').style.display = 'block';
+          } else {
+            console.log('Utente non connesso a Facebook.');
+            document.getElementById('login-button').style.display = 'block';
+          }
         }
 
-        function openMonitoring() {
-            window.location.href = '/monitoring';
-        }
-
-        function openAnalytics() {
-            window.location.href = '/analytics';
-        }
+        FB.getLoginStatus(function(response) {
+          statusChangeCallback(response);
+        });
     </script>
 </body>
 </html>
